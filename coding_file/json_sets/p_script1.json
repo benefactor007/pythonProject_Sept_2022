@@ -1,0 +1,13 @@
+{
+    "p_script1" : [
+        {
+            "expect" : "password"
+        }, 
+        {
+            "sendline" : "root"
+        }, 
+        {
+            "expect" : "100%"
+        }
+    ]
+}
