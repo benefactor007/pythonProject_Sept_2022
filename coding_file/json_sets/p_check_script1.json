@@ -1,0 +1,40 @@
+{
+    "p_check_script1" : [
+        {
+            "expect" : "password"
+        }, 
+        {
+            "sendline" : "root"
+        }, 
+        {
+            "expect" : "root@"
+        }, 
+        {
+            "sendline" : "cd /tmp/"
+        }, 
+        {
+            "expect" : "/tmp"
+        }, 
+        {
+            "sendline" : "find . -name \"tsd.persistence*\" -exec sha1sum {} + |LC_ALL=C sort"
+        }, 
+        {
+            "expect" : "4e9d90211063684bf2ce56b3f9bf94cefc141fa4"
+        }, 
+        {
+            "expect" : "569efa06c166a5db02a062bbf1275b8fff09c5d5"
+        }, 
+        {
+            "expect" : "585c1e51587cd7ecd8678171557af6c132d994a6"
+        }, 
+        {
+            "expect" : "da39a3ee5e6b4b0d3255bfef95601890afd80709"
+        }, 
+        {
+            "sendline" : "sync"
+        }, 
+        {
+            "sendline" : "exit"
+        }
+    ]
+}
