@@ -5,7 +5,7 @@
 """
 from set_coding_cfg import HU
 
-import os, sys, json, jsonpath
+import os, sys, json, jsonpath, pexpect
 
 #
 # json_data = {
@@ -1940,6 +1940,7 @@ json_data = {
 }
 
 
+
 class Sub(HU):
     init_dict = {
         'p_read_script1': [{'expect': 'password'}, {'sendline': 'root'}, {'expect': 'root@'}, {'sendline': 'cd /tmp/'},
@@ -1958,9 +1959,11 @@ class Sub(HU):
         >> ['0x04FB', '0x04FC', '0x04FE', '0x0505', '0x050E', '0x050F']
         """
         for key in RDI_list:
+            if key == "0x7213":
+                print('we found it')
             Sub.init_dict['p_read_script1'].append(
                 {"sendline": "tsd.persistence.client.mib3.app.GetKey --ns {0} --key {1}".format(ns, key)})
-            print("type of %s is" % key, type(key))
+            # print("type of %s is" % key, type(key))
             Sub.init_dict['p_read_script1'].append(
                 # {"sendline": "load: ns: {0} key: {1} slot: 0 status: 0".format(ns[3:], str(int(key,16)))})
                 {"expect": "load: ns: {0} key: {1} slot: 0 ".format(ns[3:], str(int(key, 16)))})
@@ -1969,24 +1972,108 @@ class Sub(HU):
         return Sub.init_dict
 
 
+class setGetKey(Sub):
+    ns_0x04000000 = ['29185', '29187', '29188', '29190', '29193', '29195', '29196', '29197', '29200', '29201', '29202', '29203', '29206']
+    ns_0x01000100 = ['2843']
+    ns_0x01000000 = ['1276']
+    @staticmethod
+    def creat_json_file(json_data, ns="0x01000000"):
+        RDI_list = jsonpath.jsonpath(json_data, "$..RDI")
+        for key in RDI_list:
+            setGetKey.init_dict['p_read_script1'].append(
+                {"sendline": "tsd.persistence.client.mib3.app.GetKey --ns {0} --key {1}".format(ns, key)})
+            # print("type of %s is" % key, type(key))
+            # """Set the final expect command"""
+            with open('logs_0908.txt', 'r') as file:
+                for line in file:
+                    # print('type of %s: %s' %(key,type(key)))
+                    if line.startswith('load') and line.find(str(int(key,16))) != -1:
+                        setGetKey.init_dict['p_read_script1'].append({"expect": line.rstrip('\n')})
+        # Sub.init_dict['p_read_script1'].append(
+        #      {"sendline": "load: ns: {0} key: {1} slot: 0 status: 0".format(ns[3:], str(int(key,16)))})
+        #      {"expect": "load: ns: {0} key: {1} slot: 0 ".format(ns[3:], str(int(key, 16)))})
+        setGetKey.init_dict['p_read_script1'].append({'sendline': 'sync'})
+        setGetKey.init_dict['p_read_script1'].append({'sendline': 'exit'})
+        # rename key in dictionary
+        setGetKey.init_dict['p_setGetKey_script1'] = setGetKey.init_dict.pop('p_read_script1')
+        return setGetKey.init_dict
+
+    @staticmethod
+    def adv_doPexpect(p_command, json_name, jsonpath_command):
+        with open("Getkey_logs_0908.txt", 'w') as my_log_file:
+            setGetKey.greenFont(setGetKey.repr_message("Start to pexpect...."))
+            p = pexpect.spawn(command=p_command, logfile=my_log_file, encoding='utf-8', timeout=30)
+            # json_list = HU.get_json_info("p_script1.json", "$.p_script1.*")
+            json_list = setGetKey.get_json_info(json_name, jsonpath_command)
+            for i in json_list:
+                # print(i)
+                setGetKey.pAction(list(i.items())[0], p)
+            p.close()
+            # return HU.greenFont(HU.repr_message("Success to copy file to HU"))
+            return setGetKey.greenFont(setGetKey.repr_message("Successful"))
+
+
 if __name__ == '__main__':
-    A = Sub()
-    print(A.__class__)
+
     # data = json.load(json_file)
     # print(A.creat_json_file())
     # data = json.load(A.creat_json_file())
     # json_read_script1 = json.dumps(, indent=4, separators=(", ", " : "))
     # print(json_read_script1)
     # sys.exit()
-    json.dump(A.creat_json_file(json_data, ns="0x01000000"),
-              open(os.getcwd() + '/json_sets/json_read_script1.json', 'w'), ensure_ascii=False,
-              indent=4, separators=(", ", " : "))
-    # '/bin/bash -c "ssh root@192.168.1.4 | grep load: > logs.txt'
+
+    # '/bin/bash -c "ssh root@192.168.1.4 | grep load: > logs_0908.txt'
     #
-    print(A.adv_doPexpect(p_command="ssh root@192.168.1.4", json_name="json_read_script1.json",
-                          jsonpath_command="$.{0}.*".format("p_read_script1")))
+
+    """
+    test code
+    """
+    #
+    # RDI_list = jsonpath.jsonpath(json_data, "$..RDI")
+    # # print(len(RDI_list))
+    # # print(RDI_list)
+    # a = [int(x,16) for x in RDI_list]
+    # with open('json_sets/json_setData_script1.json') as file:
+    #     setData_list = json.load(file)
+    # # print(setData_list)
+    # b = [int(x, 16) for x in setData_list]
+    # # "0x%s" % str(hex(int(key))).upper()[2:]
+    # for i in set(a)^set(b):
+    #     print("0x%s" % str(hex(int(i))).upper()[2:])
+    #
+    # sys.exit()
+    """
+    uncomment below before exec
+    Part1. collect the Getkey raw data in first.
+    """
+    # A = Sub()
+    # print(A.__class__)
+    # json.dump(A.creat_json_file(json_data, ns="0x01000000"),
+    #           open(os.getcwd() + '/json_sets/json_read_script1.json', 'w'), ensure_ascii=False,
+    #           indent=4, separators=(", ", " : "))
+    #
+    # print(A.adv_doPexpect(p_command="ssh root@192.168.1.4", json_name="json_read_script1.json",
+    #                       jsonpath_command="$.{0}.*".format("p_read_script1")))
+    # print(A.greenFont(A.repr_message("Part1. collect the Getkey raw data in first.")))
+    # sys.exit()
+    """
+    Part2. creat json_setGetKey_script1.json by former part1 exec. 
+    """
+
+    B = setGetKey()
+    json.dump(B.creat_json_file(json_data, ns="0x01000000"),
+              open(os.getcwd() + '/json_sets/json_setGetKey_script1.json', 'w'), ensure_ascii=False,
+              indent=4, separators=(", ", " : "))
+
+    print(B.adv_doPexpect(p_command="ssh root@192.168.1.4", json_name="json_setGetKey_script1.json",
+                          jsonpath_command="$.{0}.*".format("p_setGetKey_script1")))
+    print(B.greenFont(B.repr_message(" Part2. creat json_setGetKey_script1.json by former part1 exec..")))
 
     sys.exit()
+    """
+    sys.exit()
+    """
+
     RDI_list = jsonpath.jsonpath(json_data, "$..RDI")
     print(RDI_list)
 

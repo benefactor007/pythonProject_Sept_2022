@@ -69,7 +69,7 @@ class HU:
 
     @staticmethod
     def adv_doPexpect(p_command, json_name, jsonpath_command):
-        with open("logs.txt", 'w') as my_log_file:
+        with open("logs_0908.txt", 'w') as my_log_file:
             p = pexpect.spawn(command=p_command, logfile=my_log_file, encoding='utf-8', timeout=30)
             # json_list = HU.get_json_info("p_script1.json", "$.p_script1.*")
             json_list = HU.get_json_info(json_name, jsonpath_command)
