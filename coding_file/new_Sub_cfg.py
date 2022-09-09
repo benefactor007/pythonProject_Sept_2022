@@ -2,6 +2,8 @@
 """
 Add on 9/8/2022, at 1:02 PM
 """
+import time
+
 import pexpect
 
 from sub_action import Sub
@@ -84,7 +86,10 @@ class new_sub(Sub):
             json_list = new_sub.get_json_info(json_name, jsonpath_command)
             for i in json_list:
                 print(i)
-                new_sub.pAction(list(i.items())[0], p)
+                try:
+                    new_sub.pAction(list(i.items())[0], p)
+                except pexpect.TIMEOUT:
+                    print(p.before,p.after)
                 # print("%s pass"%(i))
             p.close()
             # return HU.greenFont(HU.repr_message("Success to copy file to HU"))
@@ -98,19 +103,20 @@ if __name__ == '__main__':
     """
     func: send file and checksum, pls uncomment below
     """
-    # fileList = os.listdir(os.getcwd() + "/tools")
-    #
-    #
-    # def transfer_files(cls, fileList):
-    #     for i in fileList:
-    #         # cls.doPexpect(cls.copy_file_to_HU(i))
-    #         print(cls.adv_doPexpect(cls.copy_file_to_HU(i), "p_script1.json", "$.p_script1.*"))
-    #         # print(cls.copy_file_to_HU(i))
-    #
-    #
-    # transfer_files(X, fileList)
-    # p_command = "ssh root@192.168.1.4"
-    # print(X.adv_doPexpect(p_command, "p_check_script1.json", jsonpath_command="$.p_check_script1.*"))
+    fileList = os.listdir(os.getcwd() + "/tools")
+
+
+    def transfer_files(cls, fileList):
+        for i in fileList:
+            # cls.doPexpect(cls.copy_file_to_HU(i))
+            print(cls.adv_doPexpect(cls.copy_file_to_HU(i), "p_script1.json", "$.p_script1.*"))
+            time.sleep(0.5)
+            # print(cls.copy_file_to_HU(i))
+
+
+    transfer_files(X, fileList)
+    p_command = "ssh root@192.168.1.4"
+    print(X.adv_doPexpect(p_command, "p_check_script1.json", jsonpath_command="$.p_check_script1.*"))
     # sys.exit()
 
     print(X.adv_doPexpect(p_command="ssh root@192.168.1.4", json_name="json_GetKey.json",
@@ -121,6 +127,7 @@ if __name__ == '__main__':
     # print(X.init_dict)
     # print(os.getcwd()+"/files/")
     fileList = os.listdir(os.getcwd() + "/files")
+
     print(fileList)
     #  VW_GP_CHN_v0.6_exceptCodings.json
     # print(X.get_json_info("VW_GP_CHN_v0.6_exceptCodings.json", "$..RDI"))
@@ -161,6 +168,7 @@ if __name__ == '__main__':
     print(tempDict)
     print("type of %s : %s" %("X.key_Namehex_dict", type(X.key_Namehex_dict)))
     X.key_Namehex_dict.update(tempDict)
+
     for i in key_list:
       # print(i)
       # print(X.key_Namehex_dict.get(i, "Not matched"))
@@ -170,6 +178,8 @@ if __name__ == '__main__':
     # a = json.dump(X.creat_json_file(RDI_list=key_list),indent=4, separators=(", ", " : "))
     # a = json.dumps(X.creat_json_file(RDI_list=key_list), indent=4, separators=(", ", " : "))
     # print(a)
+    key_list.append("0x0600")
+    print(X.key_Namehex_dict)
     json.dump(X.creat_json_file(RDI_list=key_list),
               open(os.getcwd() + '/json_sets/json_GetKey.json', 'w'), ensure_ascii=False,
               indent=4, separators=(", ", " : "))

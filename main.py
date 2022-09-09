@@ -11,6 +11,12 @@ def print_hi(name):
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('PyCharm')
+    # print_hi('PyCharm')
+    with open("tempTEXT.txt",'r') as f:
+        # f = f.readlines()
+        i = ""
+        for line in f:
+            i += line[2:].strip()
 
+    print(i)
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/

@@ -62,26 +62,19 @@ if __name__ == '__main__':
         # print("0x%s" % str(hex(int(i))).upper()[2:])
         print(str(hex(int(i))).upper()[2:])
     json.dump(data_analysis.data_dict,
-              open(os.getcwd() + '/json_sets/json_setData_script1_v2.json', 'w'), ensure_ascii=False,
+              open(os.getcwd() + '/json_sets/json_setData_script1_v3.json', 'w'), ensure_ascii=False,
               indent=4, separators=(", ", " : "))
 
-    p_command = "ssh root@192.168.1.4"
-    with open("find_key_1276.txt", 'w') as my_log_file:
-        p = pexpect.spawn(command=p_command, logfile=my_log_file, encoding='utf-8', timeout=60)
-        p.expect("password")
-        p.sendline("root")
-        p.expect("root@")
-        p.sendline("cd /tmp/")
-        p.expect("/tmp")
-        for i in range(10000000):
-            p.sendline("tsd.persistence.client.mib3.app.GetKey --ns 0x{0} --key 0x04FC".format(i))
-            p.expect("load:")
-        p.sendline("sync")
-        p.sendline("exit")
-        # {'expect': 'password'},
-        # {'sendline': 'root'},
-        # {'expect': 'root@'},
-        # {'sendline': "cd /tmp/"},
-        # {'expect': "/tmp"},
-        # {'sendline': 'sync'},
-        # {'sendline': 'exit'},
+    # p_command = "ssh root@192.168.1.4"
+    # with open("find_key_1276_v2.txt", 'w') as my_log_file:
+    #     p = pexpect.spawn(command=p_command, logfile=my_log_file, encoding='utf-8', timeout=60)
+    #     p.expect("password")
+    #     p.sendline("root")
+    #     p.expect("root@")
+    #     p.sendline("cd /tmp/")
+    #     p.expect("/tmp")
+    #     for i in range(1,1000000,100):
+    #         p.sendline("tsd.persistence.client.mib3.app.GetKey --ns 0x{0} --key 0x04FC".format(i))
+    #         p.expect("load:")
+    #     p.sendline("sync")
+    #     p.sendline("exit")
