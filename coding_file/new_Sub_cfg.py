@@ -2,51 +2,180 @@
 """
 Add on 9/8/2022, at 1:02 PM
 """
+import pexpect
 
 from sub_action import Sub
 import jsonpath,json,os,sys
+import xlrd
+
 
 class new_sub(Sub):
-
-    # init_dict = {
-    #     'p_read_script1': [{'expect': 'password'}, {'sendline': 'root'}, {'expect': 'root@'}, {'sendline': 'cd /tmp/'},
-    #                        {'expect': '/tmp'}]}
-    ns_0x04000000 = ['29185', '29187', '29188', '29190', '29193', '29195', '29196', '29197', '29200', '29201', '29202',
-                     '29203', '29206']
-    ns_0x01000100 = ['2843']
-    ns_0x01000000 = ['1276']
-
-
+    key_Namehex_dict = {}
+    @staticmethod
+    def fileInfo_to_dict(fileName):
+        """
+        only read first two columns, which are column 1 and column 2
+        :param fileName:
+        :return: dict{column2 : column1}
+        """
+        new_sub.key_Namehex_dict = {}
+        with open(os.getcwd() + "/files/" + fileName, 'r') as file:
+            file = file.readlines()[1:]  # way1 :  # skip the first line.
+            for line in file:
+                # print(line.split())
+                if line != "\n":
+                  new_sub.key_Namehex_dict[line.split()[1]] = line.split()[0]
+        return  new_sub.key_Namehex_dict
 
     @staticmethod
-    def set_Getkey(json_data, ns="0x01000000"):
-        """
+    def get_json_info(json_file_name, jsonPathDesc, codingFormat = None):
+      """
+      :param json_file_name:
+      :param jsonPathDesc:
+      :return: dict(json's data)
+      """
+      import json, jsonpath
+      # with open(os.getcwd() + '/json_sets/' + "p_script1.json") as json_file:
+      with open(os.getcwd() + '/json_sets/' + json_file_name, encoding= codingFormat) as json_file:
+        data = json.load(json_file)
+        res = jsonpath.jsonpath(data, jsonPathDesc)
+      return res
 
-        :param json_data:
-        :param ns: like 0x01000000
-        :return: completed json_data
-        """
-        RDI_list = jsonpath.jsonpath(json_data, "$..RDI")
-        """
-        >> ['0x04FB', '0x04FC', '0x04FE', '0x0505', '0x050E', '0x050F']
-        """
+    @staticmethod
+    def creat_json_file(RDI_list):
+        # RDI_list = jsonpath.jsonpath(json_data, "$..RDI")
         for key in RDI_list:
-            if key == "0x7213":
-                print('we found it')
-            Sub.init_dict['p_read_script1'].append(
-                {"sendline": "tsd.persistence.client.mib3.app.GetKey --ns {0} --key {1}".format(ns, key)})
+            new_sub.init_dict['p_read_script1'].append(
+                {"sendline": "tsd.persistence.client.mib3.app.GetKey --ns {0} --key {1}".format(X.key_Namehex_dict.get(key), key)})
             # print("type of %s is" % key, type(key))
-            Sub.init_dict['p_read_script1'].append(
-                # {"sendline": "load: ns: {0} key: {1} slot: 0 status: 0".format(ns[3:], str(int(key,16)))})
-                {"expect": "load: ns: {0} key: {1} slot: 0 ".format(ns[3:], str(int(key, 16)))})
-        Sub.init_dict['p_read_script1'].append({'sendline': 'sync'})
-        Sub.init_dict['p_read_script1'].append({'sendline': 'exit'})
-        return Sub.init_dict
+            # """Set the final expect command"""
+            # with open('logs_0909.txt', 'w') as file:
+            #     for line in file:
+            #         # print('type of %s: %s' %(key,type(key)))
+            #         if line.startswith('load') and line.find(str(int(key,16))) != -1:
+            #             new_sub.init_dict['p_read_script1'].append({"expect": line.rstrip('\n')})
+            Sub.init_dict['p_read_script1'].append({"expect": "load: ns: {0} key: {1} slot: 0 ".format(X.key_Namehex_dict.get(key)[2:], str(int(key, 16)))})
+        #      {"sendline": "load: ns: {0} key: {1} slot: 0 status: 0".format(ns[3:], str(int(key,16)))})
+        new_sub.init_dict['p_read_script1'].append({'sendline': 'sync'})
+        new_sub.init_dict['p_read_script1'].append({'sendline': 'exit'})
+        # rename key in dictionary
+        new_sub.init_dict['p_setGetKey_script1'] = new_sub.init_dict.pop('p_read_script1')
+        return new_sub.init_dict
 
+    @staticmethod
+    def deleteBlankLine(oldFile, newFile):
+      """
 
+      :param oldFile: "tempEdit.txt"
+      :param newFile: "newTempEdit.txt"
+      :return:
+      """
+      with open(os.getcwd() + '/files/' + oldFile, 'r') as fr, open(os.getcwd() + '/files/' + newFile, 'w', encoding='utf-8') as fd:
+        for text in fr.readlines():
+          if text.split() != []:
+            fd.write(text)
+      print("Success to delete blank line!")
+
+    @staticmethod
+    def adv_doPexpect(p_command, json_name, jsonpath_command):
+        with open("logs.txt", 'w') as my_log_file:
+            p = pexpect.spawn(command=p_command, logfile=my_log_file, encoding='utf-8', timeout=60)
+            # json_list = HU.get_json_info("p_script1.json", "$.p_script1.*")
+            json_list = new_sub.get_json_info(json_name, jsonpath_command)
+            for i in json_list:
+                print(i)
+                new_sub.pAction(list(i.items())[0], p)
+                # print("%s pass"%(i))
+            p.close()
+            # return HU.greenFont(HU.repr_message("Success to copy file to HU"))
+            return new_sub.greenFont(new_sub.repr_message("Successful"))
 
 
 
 if __name__ == '__main__':
+
     X = new_sub()
-    print(X.init_dict)
+    """
+    func: send file and checksum, pls uncomment below
+    """
+    # fileList = os.listdir(os.getcwd() + "/tools")
+    #
+    #
+    # def transfer_files(cls, fileList):
+    #     for i in fileList:
+    #         # cls.doPexpect(cls.copy_file_to_HU(i))
+    #         print(cls.adv_doPexpect(cls.copy_file_to_HU(i), "p_script1.json", "$.p_script1.*"))
+    #         # print(cls.copy_file_to_HU(i))
+    #
+    #
+    # transfer_files(X, fileList)
+    # p_command = "ssh root@192.168.1.4"
+    # print(X.adv_doPexpect(p_command, "p_check_script1.json", jsonpath_command="$.p_check_script1.*"))
+    # sys.exit()
+
+    print(X.adv_doPexpect(p_command="ssh root@192.168.1.4", json_name="json_GetKey.json",
+                          jsonpath_command="$.{0}.*".format("p_setGetKey_script1")))
+    print(X.greenFont(X.repr_message("Success to exec. Pexpect")))
+    sys.exit()
+
+    # print(X.init_dict)
+    # print(os.getcwd()+"/files/")
+    fileList = os.listdir(os.getcwd() + "/files")
+    print(fileList)
+    #  VW_GP_CHN_v0.6_exceptCodings.json
+    # print(X.get_json_info("VW_GP_CHN_v0.6_exceptCodings.json", "$..RDI"))
+    # json_path = os.getcwd() + '/json_sets/' + "VW_GP_CHN_v0.6_exceptCodings.json"
+    # print(json_path)
+    # print("/home/jpcc/PycharmProjects/pythonProject_Sept_2022/coding_file/json_sets/VW_GP_CHN_v0.6_exceptCodings.json")
+    # with open(json_path,encoding = 'utf-8-sig') as json_file:
+    #     data = json.load(json_file)
+    # print(data)
+    # json_path = os.getcwd() + '/json_sets/' + "p_script1.json"
+    # print(json_path)
+    # with open(json_path, encoding= None) as json_file:
+    #   data = json.load(json_file)
+    # print(data)
+    # print(jsonpath.jsonpath(json_path,"$..RDI"))
+
+    print(X.fileInfo_to_dict("RecordDataIdOverview.txt"))
+    key_list = X.get_json_info("VW_GP_CHN_v0.6_exceptCodings.json", "$..RDI", codingFormat = "utf-8-sig")
+
+    # sys.exit()
+    for i in key_list:
+      # print(i)
+      # print(X.key_Namehex_dict.get(i, "Not matched"))
+      if X.key_Namehex_dict.get(i, "Not matched") == "Not matched":
+        print("No match key is %s" % i)
+    # sys.exit()
+
+    X.deleteBlankLine("tempEdit.txt", "newTempEdit.txt")
+
+    tempDict = {}
+    with open(os.getcwd() + '/files/' + 'newTempEdit.txt', 'r') as f:
+      f = f.readlines()
+      for line in f[1:]:
+        tempDict[line.strip()] = f[0].strip()
+
+
+
+    print(tempDict)
+    print("type of %s : %s" %("X.key_Namehex_dict", type(X.key_Namehex_dict)))
+    X.key_Namehex_dict.update(tempDict)
+    for i in key_list:
+      # print(i)
+      # print(X.key_Namehex_dict.get(i, "Not matched"))
+      if X.key_Namehex_dict.get(i, "Not matched") == "Not matched":
+        raise Exception("We found an unmatched Key")
+        # print("No match key is %s" % i)
+    # a = json.dump(X.creat_json_file(RDI_list=key_list),indent=4, separators=(", ", " : "))
+    # a = json.dumps(X.creat_json_file(RDI_list=key_list), indent=4, separators=(", ", " : "))
+    # print(a)
+    json.dump(X.creat_json_file(RDI_list=key_list),
+              open(os.getcwd() + '/json_sets/json_GetKey.json', 'w'), ensure_ascii=False,
+              indent=4, separators=(", ", " : "))
+
+
+
+
+
+

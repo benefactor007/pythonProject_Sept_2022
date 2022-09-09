@@ -26,10 +26,10 @@
         }, 
         {
             "expect" : "585c1e51587cd7ecd8678171557af6c132d994a6"
-        }, 
+        },
         {
-            "expect" : "da39a3ee5e6b4b0d3255bfef95601890afd80709"
-        }, 
+            "expect" : "880152e334d675794bea1f3616d1c94c147c1962  .\/tsd.persistence.client.mib3.app.GetKey"
+        },
         {
             "sendline" : "sync"
         }, 

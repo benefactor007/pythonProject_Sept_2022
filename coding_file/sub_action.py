@@ -1999,6 +1999,20 @@ class setGetKey(Sub):
         return setGetKey.init_dict
 
     @staticmethod
+    def get_json_info(json_file_name, jsonPathDesc):
+        """
+        :param json_file_name:
+        :param jsonPathDesc:
+        :return: dict(json's data)
+        """
+        import json, jsonpath
+        # with open(os.getcwd() + '/json_sets/' + "p_script1.json") as json_file:
+        with open(os.getcwd() + '/json_sets/' + json_file_name) as json_file:
+            data = json.load(json_file)
+            res = jsonpath.jsonpath(data, jsonPathDesc)
+        return res
+
+    @staticmethod
     def adv_doPexpect(p_command, json_name, jsonpath_command):
         with open("Getkey_logs_0908.txt", 'w') as my_log_file:
             setGetKey.greenFont(setGetKey.repr_message("Start to pexpect...."))
