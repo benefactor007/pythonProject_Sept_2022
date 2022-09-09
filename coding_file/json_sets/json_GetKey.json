@@ -16,6 +16,84 @@
             "expect" : "/tmp"
         }, 
         {
+            "sendline" : "tsd.persistence.client.mib3.app.GetKey --ns 0x4000000 --key 0x7201"
+        }, 
+        {
+            "expect" : "load: ns: 4000000 key: 29185 slot: 0 "
+        }, 
+        {
+            "sendline" : "tsd.persistence.client.mib3.app.GetKey --ns 0x4000000 --key 0x7203"
+        }, 
+        {
+            "expect" : "load: ns: 4000000 key: 29187 slot: 0 "
+        }, 
+        {
+            "sendline" : "tsd.persistence.client.mib3.app.GetKey --ns 0x4000000 --key 0x7204"
+        }, 
+        {
+            "expect" : "load: ns: 4000000 key: 29188 slot: 0 "
+        }, 
+        {
+            "sendline" : "tsd.persistence.client.mib3.app.GetKey --ns 0x4000000 --key 0x7206"
+        }, 
+        {
+            "expect" : "load: ns: 4000000 key: 29190 slot: 0 "
+        }, 
+        {
+            "sendline" : "tsd.persistence.client.mib3.app.GetKey --ns 0x4000000 --key 0x7209"
+        }, 
+        {
+            "expect" : "load: ns: 4000000 key: 29193 slot: 0 "
+        }, 
+        {
+            "sendline" : "tsd.persistence.client.mib3.app.GetKey --ns 0x4000000 --key 0x720B"
+        }, 
+        {
+            "expect" : "load: ns: 4000000 key: 29195 slot: 0 "
+        }, 
+        {
+            "sendline" : "tsd.persistence.client.mib3.app.GetKey --ns 0x4000000 --key 0x720C"
+        }, 
+        {
+            "expect" : "load: ns: 4000000 key: 29196 slot: 0 "
+        }, 
+        {
+            "sendline" : "tsd.persistence.client.mib3.app.GetKey --ns 0x4000000 --key 0x720D"
+        }, 
+        {
+            "expect" : "load: ns: 4000000 key: 29197 slot: 0 "
+        }, 
+        {
+            "sendline" : "tsd.persistence.client.mib3.app.GetKey --ns 0x4000000 --key 0x7210"
+        }, 
+        {
+            "expect" : "load: ns: 4000000 key: 29200 slot: 0 "
+        }, 
+        {
+            "sendline" : "tsd.persistence.client.mib3.app.GetKey --ns 0x4000000 --key 0x7211"
+        }, 
+        {
+            "expect" : "load: ns: 4000000 key: 29201 slot: 0 "
+        }, 
+        {
+            "sendline" : "tsd.persistence.client.mib3.app.GetKey --ns 0x4000000 --key 0x7212"
+        }, 
+        {
+            "expect" : "load: ns: 4000000 key: 29202 slot: 0 "
+        }, 
+        {
+            "sendline" : "tsd.persistence.client.mib3.app.GetKey --ns 0x4000000 --key 0x7213"
+        }, 
+        {
+            "expect" : "load: ns: 4000000 key: 29203 slot: 0 "
+        }, 
+        {
+            "sendline" : "tsd.persistence.client.mib3.app.GetKey --ns 0x4000000 --key 0x7216"
+        }, 
+        {
+            "expect" : "load: ns: 4000000 key: 29206 slot: 0 "
+        }, 
+        {
             "sendline" : "tsd.persistence.client.mib3.app.GetKey --ns 0x1000000 --key 0x04FB"
         }, 
         {
@@ -514,82 +592,10 @@
             "expect" : "load: ns: 1000000 key: 9282 slot: 0 "
         }, 
         {
-            "sendline" : "tsd.persistence.client.mib3.app.GetKey --ns 0x4000000 --key 0x7201"
+            "sendline" : "tsd.persistence.client.mib3.app.GetKey --ns 0x2000000 --key 0x0600"
         }, 
         {
-            "expect" : "load: ns: 4000000 key: 29185 slot: 0 "
-        }, 
-        {
-            "sendline" : "tsd.persistence.client.mib3.app.GetKey --ns 0x4000000 --key 0x7203"
-        }, 
-        {
-            "expect" : "load: ns: 4000000 key: 29187 slot: 0 "
-        }, 
-        {
-            "sendline" : "tsd.persistence.client.mib3.app.GetKey --ns 0x4000000 --key 0x7204"
-        }, 
-        {
-            "expect" : "load: ns: 4000000 key: 29188 slot: 0 "
-        }, 
-        {
-            "sendline" : "tsd.persistence.client.mib3.app.GetKey --ns 0x4000000 --key 0x7206"
-        }, 
-        {
-            "expect" : "load: ns: 4000000 key: 29190 slot: 0 "
-        }, 
-        {
-            "sendline" : "tsd.persistence.client.mib3.app.GetKey --ns 0x4000000 --key 0x7209"
-        }, 
-        {
-            "expect" : "load: ns: 4000000 key: 29193 slot: 0 "
-        }, 
-        {
-            "sendline" : "tsd.persistence.client.mib3.app.GetKey --ns 0x4000000 --key 0x720B"
-        }, 
-        {
-            "expect" : "load: ns: 4000000 key: 29195 slot: 0 "
-        }, 
-        {
-            "sendline" : "tsd.persistence.client.mib3.app.GetKey --ns 0x4000000 --key 0x720C"
-        }, 
-        {
-            "expect" : "load: ns: 4000000 key: 29196 slot: 0 "
-        }, 
-        {
-            "sendline" : "tsd.persistence.client.mib3.app.GetKey --ns 0x4000000 --key 0x720D"
-        }, 
-        {
-            "expect" : "load: ns: 4000000 key: 29197 slot: 0 "
-        }, 
-        {
-            "sendline" : "tsd.persistence.client.mib3.app.GetKey --ns 0x4000000 --key 0x7210"
-        }, 
-        {
-            "expect" : "load: ns: 4000000 key: 29200 slot: 0 "
-        }, 
-        {
-            "sendline" : "tsd.persistence.client.mib3.app.GetKey --ns 0x4000000 --key 0x7211"
-        }, 
-        {
-            "expect" : "load: ns: 4000000 key: 29201 slot: 0 "
-        }, 
-        {
-            "sendline" : "tsd.persistence.client.mib3.app.GetKey --ns 0x4000000 --key 0x7212"
-        }, 
-        {
-            "expect" : "load: ns: 4000000 key: 29202 slot: 0 "
-        }, 
-        {
-            "sendline" : "tsd.persistence.client.mib3.app.GetKey --ns 0x4000000 --key 0x7213"
-        }, 
-        {
-            "expect" : "load: ns: 4000000 key: 29203 slot: 0 "
-        }, 
-        {
-            "sendline" : "tsd.persistence.client.mib3.app.GetKey --ns 0x4000000 --key 0x7216"
-        }, 
-        {
-            "expect" : "load: ns: 4000000 key: 29206 slot: 0 "
+            "expect" : "load: ns: 2000000 key: 1536 slot: 0 "
         }, 
         {
             "sendline" : "sync"
