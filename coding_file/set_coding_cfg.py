@@ -23,7 +23,7 @@ class HU:
         # print(os.getcwd())  # get the current path
         tools_path = os.getcwd() + "/" + "tools"
         p_command = "scp -r " + tools_path + "/" + tools_name + " " + HU.password + "@" + HU.ip + ":/" + HU.dest_dic + "/"
-        # print(p_command)
+        print(p_command)
         return p_command
 
     @staticmethod

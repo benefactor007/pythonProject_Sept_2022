@@ -1,0 +1,49 @@
+{
+    "p_check_script2" : [
+        {
+            "expect" : "password"
+        }, 
+        {
+            "sendline" : "root"
+        }, 
+        {
+            "expect" : "root@"
+        }, 
+        {
+            "sendline" : "cd /tmp/"
+        }, 
+        {
+            "expect" : "/tmp"
+        }, 
+        {
+            "sendline" : "sha1sum tsd.persistence.client.mib3.app.GetKey"
+        }, 
+        {
+            "expect" : "880152e334d675794bea1f3616d1c94c147c1962  tsd.persistence.client.mib3.app.GetKey"
+        }, 
+        {
+           "sendline" : "sha1sum tsd.persistence.client.mib3.app.SetKey"
+        }, 
+        {
+            "expect" : "4e9d90211063684bf2ce56b3f9bf94cefc141fa4  tsd.persistence.client.mib3.app.SetKey"
+        },
+        {
+           "sendline" : "sha1sum tsd.persistence.client.mib3.app.CallReset"
+        },
+        {
+            "expect" : "585c1e51587cd7ecd8678171557af6c132d994a6  tsd.persistence.client.mib3.app.CallReset"
+        },
+        {
+           "sendline" : "sha1sum tsd.persistence.client.mib3.app.InitPersistence"
+        },
+        {
+            "expect" : "569efa06c166a5db02a062bbf1275b8fff09c5d5  tsd.persistence.client.mib3.app.InitPersistence"
+        },
+        {
+            "sendline" : "sync"
+        }, 
+        {
+            "sendline" : "exit"
+        }
+    ]
+}
