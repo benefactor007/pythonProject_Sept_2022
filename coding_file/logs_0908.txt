@@ -1,2 +1,20 @@
-ssh: connect to host 192.168.1.4 port 22: Connection refused
-lost connection
+root@192.168.1.4's password: root
+
+[root@vw-infotainment-gp:~]# [mcd /tmp/
+cd /tmp/sha1sum tsd.persistence.client.mib3.app.GetKey
+
+[root@vw-infotainment-gp:/tmp]# [msha1sum tsd.persistence.client.mib3.app.GetKey
+880152e334d675794bea1f3616d1c94c147c1962  tsd.persistence.client.mib3.app.GetKey
+[root@vw-infotainment-gp:/tmp]# [msha1sum tsd.persistence.client.mib3.app.SetKey
+sha1sum tsd.persistence.client.mib3.app.SetKey
+4e9d90211063684bf2ce56b3f9bf94cefc141fa4  tsd.persistence.client.mib3.app.SetKey
+[root@vw-infotainment-gp:/tmp]# [msha1sum tsd.persistence.client.mib3.app.CallReset
+sha1sum tsd.persistence.client.mib3.app.CallRese
+t
+585c1e51587cd7ecd8678171557af6c132d994a6  tsd.persistence.client.mib3.app.CallReset
+[root@vw-infotainment-gp:/tmp]# [msha1sum tsd.persistence.client.mib3.app.InitPersistence
+sha1sum tsd.persistence.client.mib3.app.InitPers
+istence
+569efa06c166a5db02a062bbf1275b8fff09c5d5  tsd.persistence.client.mib3.app.InitPersistence
+[root@vw-infotainment-gp:/tmp]# [msync
+exit

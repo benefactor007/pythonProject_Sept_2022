@@ -1947,7 +1947,7 @@ class Sub(HU):
                            {'expect': '/tmp'}]}
 
     @staticmethod
-    def creat_json_file(json_data, ns="0x01000000"):
+    def create_json_file(json_data, ns="0x01000000"):
         """
 
         :param json_data:
@@ -1977,7 +1977,7 @@ class setGetKey(Sub):
     ns_0x01000100 = ['2843']
     ns_0x01000000 = ['1276']
     @staticmethod
-    def creat_json_file(json_data, ns="0x01000000"):
+    def create_json_file(json_data, ns="0x01000000"):
         RDI_list = jsonpath.jsonpath(json_data, "$..RDI")
         for key in RDI_list:
             setGetKey.init_dict['p_read_script1'].append(
@@ -2030,8 +2030,8 @@ class setGetKey(Sub):
 if __name__ == '__main__':
 
     # data = json.load(json_file)
-    # print(A.creat_json_file())
-    # data = json.load(A.creat_json_file())
+    # print(A.create_json_file())
+    # data = json.load(A.create_json_file())
     # json_read_script1 = json.dumps(, indent=4, separators=(", ", " : "))
     # print(json_read_script1)
     # sys.exit()
@@ -2062,7 +2062,7 @@ if __name__ == '__main__':
     """
     # A = Sub()
     # print(A.__class__)
-    # json.dump(A.creat_json_file(json_data, ns="0x01000000"),
+    # json.dump(A.create_json_file(json_data, ns="0x01000000"),
     #           open(os.getcwd() + '/json_sets/json_read_script1.json', 'w'), ensure_ascii=False,
     #           indent=4, separators=(", ", " : "))
     #
@@ -2075,7 +2075,7 @@ if __name__ == '__main__':
     """
 
     B = setGetKey()
-    json.dump(B.creat_json_file(json_data, ns="0x01000000"),
+    json.dump(B.create_json_file(json_data, ns="0x01000000"),
               open(os.getcwd() + '/json_sets/json_setGetKey_script1.json', 'w'), ensure_ascii=False,
               indent=4, separators=(", ", " : "))
 

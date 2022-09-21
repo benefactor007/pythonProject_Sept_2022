@@ -45,7 +45,7 @@ class new_sub(Sub):
         return res
 
     @staticmethod
-    def creat_json_file(RDI_list):
+    def create_json_file(RDI_list):
         # RDI_list = jsonpath.jsonpath(json_data, "$..RDI")
         for key in RDI_list:
             new_sub.init_dict['p_read_script1'].append(
@@ -188,11 +188,11 @@ if __name__ == '__main__':
         if X.key_Namehex_dict.get(i, "Not matched") == "Not matched":
             raise Exception("We found an unmatched Key")
             # print("No match key is %s" % i)
-    # a = json.dump(X.creat_json_file(RDI_list=key_list),indent=4, separators=(", ", " : "))
-    # a = json.dumps(X.creat_json_file(RDI_list=key_list), indent=4, separators=(", ", " : "))
+    # a = json.dump(X.create_json_file(RDI_list=key_list),indent=4, separators=(", ", " : "))
+    # a = json.dumps(X.create_json_file(RDI_list=key_list), indent=4, separators=(", ", " : "))
     # print(a)
     key_list.append("0x0600")
     print(X.key_Namehex_dict)
-    json.dump(X.creat_json_file(RDI_list=key_list),
+    json.dump(X.create_json_file(RDI_list=key_list),
               open(os.getcwd() + '/json_sets/json_GetKey.json', 'w'), ensure_ascii=False,
               indent=4, separators=(", ", " : "))

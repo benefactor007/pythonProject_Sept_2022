@@ -1,3 +1,7 @@
+import time
+
+import pexpect
+
 from sub_action import Sub
 
 import os, sys, json, jsonpath
@@ -9,7 +13,7 @@ class data_analysis_v2(Sub):
     json_script_data = {}
     init_dict = {
         'setkey_script': [{'expect': 'password'}, {'sendline': 'root'}, {'expect': 'root@'}, {'sendline': 'cd /tmp/'},
-                           {'expect': '/tmp'}]}
+                          {'expect': '/tmp'}]}
     p_login = {'p_login': [{'expect': 'password'},
                            {'sendline': 'root'},
                            {'expect': 'root@'},
@@ -55,12 +59,12 @@ class data_analysis_v2(Sub):
             raise ValueError("length should be even")
 
     @staticmethod
-    def slice_input(data,step=100, **args):         # if len(data) more than 100
+    def slice_input(data, step=100, **args):  # if len(data) more than 100
         slice_list = []
-        index = [x for x in range(0,len(data),step)]
+        index = [x for x in range(0, len(data), step)]
         for i in range(len(index)):
             if i != len(index) - 1:
-                slice_list.append(data[index[i]:index[i+1]] + "\\")
+                slice_list.append(data[index[i]:index[i + 1]] + "\\")
             else:
                 slice_list.append(data[index[i]:])
         return slice_list
@@ -73,9 +77,88 @@ class data_analysis_v2(Sub):
         # return data_analysis_v2.init_dict
 
     @staticmethod
-    def save_like_a_json(jsonData,fileName = 'ns1000000.json',localPath = os.getcwd() + '/json_sets/' ):
-        return json.dump(jsonData, open(localPath + fileName , 'w'), ensure_ascii=False,
-                  indent=4, separators=(", ", " : "))
+    def save_like_a_json(jsonData, fileName='ns1000000.json', localPath=os.getcwd() + '/json_sets/'):
+        return json.dump(jsonData, open(localPath + fileName, 'w'), ensure_ascii=False,
+                         indent=4, separators=(", ", " : "))
+
+    @staticmethod
+    def create_json_file(jsonFile, nss = ("1000000","2000000","4000000")):  # create_json_file("ns1000000.json", ns = "1000000")
+        data_analysis_v2.init_dict = {
+            'p_setkey': [{'expect': 'password'},
+                         {'sendline': 'root'},
+                         {'expect': 'root@'},
+                         {'sendline': 'cd /tmp/'},
+                         {'expect': '/tmp'},
+                         {'sendline': 'chmod +x tsd.*'}]}
+        for ns in  nss:
+            key_list = list(data_analysis_v2.get_json_info(jsonFile, "$.{0}..key".format(ns)))
+            data_list = list(data_analysis_v2.get_json_info(jsonFile, "$.{0}..data".format(ns)))
+            # RDI_list = jsonpath.jsonpath(json_data, "$..RDI")
+            for i, j in zip(key_list, data_list):
+                print("type of {0} is {1}".format(i,type(i)))
+                data_analysis_v2.init_dict['p_setkey'].append(
+                    {"sendline": "./tsd.persistence.client.mib3.app.SetKey --ns 0x{0} --key 0x{1} --val 0x{2}".format(ns, (hex(int(i)).upper())[2:], j)})
+                data_analysis_v2.init_dict['p_setkey'].append(
+                    {"expect": "store: ns: {0} key: {1} slot: 0 status: 0 ".format(ns, i)})
+        data_analysis_v2.init_dict['p_setkey'].append({'sendline': 'sync'})
+        data_analysis_v2.init_dict['p_setkey'].append({'sendline': 'exit'})
+        return data_analysis_v2.init_dict
+
+    @staticmethod
+    def transfer_files(cls, fileList):
+        for i in fileList:
+            # cls.doPexpect(cls.copy_file_to_HU(i))
+            print(cls.adv_doPexpect(cls.copy_file_to_HU(i), "p_script1.json", "$.p_script1.*"))
+            time.sleep(1)
+
+    @staticmethod
+    def adv_doPexpect(p_command, json_name, jsonpath_command, log_name="logs.txt"):  # add on 9/19/2022
+        """
+
+        :param p_command:
+        :param json_name:
+        :param jsonpath_command:
+        :param log_name:
+        :return:
+        """
+        # def adv_doPexpect(p_command, json_name, jsonpath_command):
+        # with open("logs.txt", 'w') as my_log_file:
+        with open(log_name, 'w') as my_log_file:  # add on 9/19/2022
+            p = pexpect.spawn(command=p_command, logfile=my_log_file, encoding='utf-8', timeout=20)
+            # json_list = HU.get_json_info("p_script1.json", "$.p_script1.*")
+            json_list = data_analysis_v2.get_json_info(json_name, jsonpath_command)
+            for i in json_list:
+                print(i)
+                try:
+                    data_analysis_v2.pAction(list(i.items())[0], p)
+                except pexpect.TIMEOUT:
+                    print(p.before, p.after)
+                # print("%s pass"%(i))
+            p.expect(pexpect.EOF)  # Add in 9/19/2022
+            p.close()
+            # return HU.greenFont(HU.repr_message("Success to copy file to HU"))
+            return data_analysis_v2.greenFont(data_analysis_v2.repr_message("Successful"))
+            # print(cls.copy_file_to_HU(i))
+        # for key in RDI_list:
+        #     new_sub.init_dict['p_read_script1'].append(
+        #         {"sendline": "tsd.persistence.client.mib3.app.GetKey --ns {0} --key {1}".format(
+        #             X.key_Namehex_dict.get(key), key)})
+        #     # print("type of %s is" % key, type(key))
+        #     # """Set the final expect command"""
+        #     # with open('logs_0909.txt', 'w') as file:
+        #     #     for line in file:
+        #     #         # print('type of %s: %s' %(key,type(key)))
+        #     #         if line.startswith('load') and line.find(str(int(key,16))) != -1:
+        #     #             new_sub.init_dict['p_read_script1'].append({"expect": line.rstrip('\n')})
+        #     Sub.init_dict['p_read_script1'].append({"expect": "load: ns: {0} key: {1} slot: 0 ".format(
+        #         X.key_Namehex_dict.get(key)[2:], str(int(key, 16)))})
+        # #      {"sendline": "load: ns: {0} key: {1} slot: 0 status: 0".format(ns[3:], str(int(key,16)))})
+        # new_sub.init_dict['p_read_script1'].append({'sendline': 'sync'})
+        # new_sub.init_dict['p_read_script1'].append({'sendline': 'exit'})
+        # # rename key in dictionary
+        # new_sub.init_dict['p_setGetKey_script1'] = new_sub.init_dict.pop('p_read_script1')
+        # return new_sub.init_dict
+
 
 json_data = {
     "Codings": {
@@ -141,13 +224,6 @@ json_data = {
     ]
 }
 
-
-
-
-
-
-
-
 if __name__ == '__main__':
     dir_log = "log_sets/"
     logFile = "load_data.txt"
@@ -167,30 +243,78 @@ if __name__ == '__main__':
                             X.errorKey_list.append(line)
                         else:
                             temp_dict = {}
-                            temp_dict[X.found_info_between(line, "key:", "slot:")] = X.found_info_between(line, "data:")
+                            temp_dict["key"] = X.found_info_between(line, "key:", "slot:")  # add on 9/21
+                            if len(X.formatData(X.found_info_between(line, "data:").split())) > 100:
+                                print(type("".join(X.slice_input(
+                                    X.formatData(X.found_info_between(line, "data:").split())))))
+                                temp_dict["data"] = "".join(X.slice_input(
+                                    X.formatData(X.found_info_between(line, "data:").split())))
+                                print("".join(X.slice_input(
+                                    X.formatData(X.found_info_between(line, "data:").split()))))
+                                # sys.exit()
+                            else:
+                                temp_dict["data"] = X.formatData(X.found_info_between(line, "data:").split())
+                            # temp_dict[X.found_info_between(line, "key:", "slot:")] = X.found_info_between(line, "data:")
                             # print(temp_dict)
                             if not X.setKey_data_dict.get(ns, None):
                                 X.setKey_data_dict[ns] = [temp_dict]
                             else:
-                               X.setKey_data_dict[ns].append(temp_dict)
-
-
+                                X.setKey_data_dict[ns].append(temp_dict)
 
     import pprint
 
     print("*" * 60)
     pprint.pprint(X.errorKey_list)
     print("=" * 60)
-    print(X.setKey_data_dict)
+    pprint.pprint(X.setKey_data_dict)
+    # sys.exit()
     # for i in  X.setKey_data_dict["4000000"]:
     #     print(i)
-    print("%"*60)
+    print("type of {0} is {1}".format("X.setKey_data_dict",type(X.setKey_data_dict)))
+
+    X.save_like_a_json(X.setKey_data_dict)
+    pprint.pprint(X.errorKey_list)  # >> errorList
+    # print(list(X.get_json_info("ns1000000.json", "$.1000000..key")))
+    # print(list(X.get_json_info("ns1000000.json", "$.1000000..data")))
+    list_key = list(X.get_json_info("ns1000000.json", "$.1000000..key"))
+    list_data = list(X.get_json_info("ns1000000.json", "$.1000000..data"))
+    """Add on 9/21/2022"""
+    # b = zip(list(X.get_json_info("ns1000000.json", "$.1000000..key")),list(X.get_json_info("ns1000000.json", "$.1000000..data")))
+    # for i, j in zip(list_key,list_data):
+    #     print(i,j)
+    # pprint.pprint(X.create_json_file("ns1000000.json", ns="1000000"))
+    # pprint.pprint(X.create_json_file("ns1000000.json"))  << new
+    # sys.exit()
+    # print("type of {0} is {1}".format("X.create_json_file(\"ns1000000.json\", ns=\"1000000\")", type(X.create_json_file("ns1000000.json", ns="1000000"))))
+    # sys.exit()
+    # X.save_like_a_json(jsonData = X.create_json_file("ns1000000.json", ns="1000000"),fileName="p_ns1000000_setkey.json")
+    X.save_like_a_json(jsonData=X.create_json_file("ns1000000.json"), fileName="p_ns1000000_setkey.json")  # << new
+    fileList = os.listdir(os.getcwd() + "/tools")
+    X.transfer_files(X, fileList)
+    p_command = "ssh root@192.168.1.4"
+    print(X.adv_doPexpect(p_command, "p_check_script2.json", jsonpath_command="$.p_check_script2.*"))
+    # change check p_check_script from 1 to 2.!!!!!!!!
+    print(X.adv_doPexpect(p_command="ssh root@192.168.1.4", json_name="p_ns1000000_setkey.json",
+                          jsonpath_command="$.{0}.*".format("p_setkey"), log_name="log_0921.txt"))
+    print(X.greenFont(X.repr_message("Success to exec. Pexpect")))
+    sys.exit()
+    """End"""
+
+    # def json_to_setkey(givenDict):
+
+
+
+
+
+
+    sys.exit()
+    print("%" * 60)
     # print(X.setKey_data_dict["1000000"][6]['1299'].split())
     data = X.setKey_data_dict["1000000"][6]['1299'].split()
     nsList_1000000 = [x for x in X.setKey_data_dict["1000000"]]
     temp_dict_2 = {}
     for i in nsList_1000000:
-        for j,k in zip(i.values(),i.keys()):
+        for j, k in zip(i.values(), i.keys()):
             if len(X.formatData(j.split())) > 100:
                 # print(k)
                 # print(X.slice_input(X.formatData(j.split())))
@@ -203,6 +327,7 @@ if __name__ == '__main__':
     for i in temp_dict_2:
         if type(temp_dict_2[i]) == list:
             print(i)
+
     # X.save_like_a_json(temp_dict_2)
     sys.exit()
     # for i in range(len(data)):
@@ -244,5 +369,3 @@ if __name__ == '__main__':
     data = "4d3134310268ffef01000c0001004667031204020100000000008e0000005c4124020003c42000000000204352433a32323434313543000000008c000000f85bf38affffffff80bf5d0564000000ebfbea14840300000a062417030000004aded225020000009cdd492dc05d00009abc654203000000bcf96379010000000093eb94dc050000ad21c6ac64000000f533c7bb581b000091a6b9be01000000930604ef41000000daa3c5f0010000004c8043f20f000000f85bf38a00000000316448115501000015cb943b03000000d1aa66521c0c00008a301f5820000000237ae46a74000000d90100007ffbffff48010000f4010000aeffffff000100009d000000b00400009a01000096000000f3010000f90100006d0100009cfeffffcb090000d80900002affffff000000000000000000000000000000000000000000000000824a546e03000000dfe04e7607000000cf45ed79020000004a0869b3010000000000000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f000000100000001100000012000000130000001400000015000000160000001700000018000000190000001a0000001b0000001c0000001d00000027360bb8c83200007b967fbd03000000fbc55dd61e000000f85bf38a0100000031644811c200000015cb943b030000008a301f5819000000f85bf38a020000002ecab946b4000000f85bf38a030000002ecab946b4000000f85bf38a040000002ecab946b4000000f85bf38a050000002ecab946b4000000f85bf38a060000002ecab946b4000000f85bf38a070000002ecab946b40000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
     print(X.slice_input(data))
     print(X.init_dict)
-
-
