@@ -1,0 +1,40 @@
+{
+    "p_check_script1" : [
+        {
+            "expect" : "password"
+        }, 
+        {
+            "sendline" : "root"
+        }, 
+        {
+            "expect" : "root@"
+        }, 
+        {
+            "sendline" : "cd /tmp/"
+        }, 
+        {
+            "expect" : "/tmp"
+        }, 
+        {
+            "sendline" : "find . -name \"tsd.persistence*\" -exec sha1sum {} + |LC_ALL=C sort -s"
+        }, 
+        {
+            "expect" : "4e9d90211063684bf2ce56b3f9bf94cefc141fa4  .\/tsd.persistence.client.mib3.app.SetKey"
+        }, 
+        {
+            "expect" : "569efa06c166a5db02a062bbf1275b8fff09c5d5  .\/tsd.persistence.client.mib3.app.InitPersistence"
+        }, 
+        {
+            "expect" : "880152e334d675794bea1f3616d1c94c147c1962  .\/tsd.persistence.client.mib3.app.GetKey"
+        },
+        {
+            "expect" : "da39a3ee5e6b4b0d3255bfef95601890afd80709  .\/tsd.persistence.client.mib3.app.CallReset"
+        },
+        {
+            "sendline" : "sync"
+        }, 
+        {
+            "sendline" : "exit"
+        }
+    ]
+}

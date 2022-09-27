@@ -31,6 +31,10 @@ class HU:
         return "\033[32m" + str + "\033[0m"
 
     @staticmethod
+    def redFont(str):
+        return "\033[31m" + str + "\033[0m"
+
+    @staticmethod
     def repr_message(message: str):
         padding_len = '%' + str(int(len(message) / 2) + 35) + 's'
         return "=" * 70 + "\n" + padding_len % message + "\n" + "=" * 70 + "\n"

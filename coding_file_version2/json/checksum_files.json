@@ -1,0 +1,34 @@
+{
+    "head" : [
+        {
+            "expect" : "password", 
+            "spawn_command" : "ssh root@192.168.1.4"
+        }, 
+        {
+            "expect" : "root@", 
+            "sendline" : "root"
+        }, 
+        {
+            "expect" : "/tmp", 
+            "sendline" : "cd /tmp/"
+        }
+    ], 
+    "tail" : [
+        {
+            "sendline" : "sync"
+        }, 
+        {
+            "sendline" : "exit"
+        }
+    ], 
+    "checksum_files" : [
+        {
+            "expect" : "880152e334d675794bea1f3616d1c94c147c1962  tsd.persistence.client.mib3.app.GetKey", 
+            "sendline" : "sha1sum tsd.persistence.client.mib3.app.GetKey"
+        }, 
+        {
+            "expect" : "4e9d90211063684bf2ce56b3f9bf94cefc141fa4  tsd.persistence.client.mib3.app.SetKey", 
+            "sendline" : "sha1sum tsd.persistence.client.mib3.app.SetKey"
+        }
+    ]
+}
