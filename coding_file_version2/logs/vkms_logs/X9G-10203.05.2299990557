@@ -1,0 +1,14 @@
+[root@vw-infotainment-gp:~]# [mcd /tm[root@vw-infotainment-gp:~]# [mcd /tmp/[J
+[root@vw-infotainment-gp:/tmp]# [m./vkm[root@vw-infotainment-gp:/tmp]# [m./vkms_i[Jn[root@vw-infotainment-gp:/tmp]# [m./vkms_init_pss_gp.sh [J
+Importing VKMS MQB/GP [PSS KEY]
+Finished
+[root@vw-infotainment-gp:/tmp]# [m./vkm[root@vw-infotainment-gp:/tmp]# [m./vkms_i[Jm[root@vw-infotainment-gp:/tmp]# [m./vkms_import_[Jre[root@vw-infotainment-gp:/tmp]# [m./vkms_import_reset_dlc.sh [J
+Importing VKMS [Reset DLC]
+Finished
+[root@vw-infotainment-gp:/tmp]# [m/[J./vkms[root@vw-infotainment-gp:/tmp]# [m./vkms_i[J
+vkms_import_mqb_dlc_v3.sh  vkms_import_reset_dlc.sh   vkms_init_pss_gp.sh
+[root@vw-infotainment-gp:/tmp]# [m./vkms_i[Jm[root@vw-infotainment-gp:/tmp]# [m./vkms_import_[Jv[Jm[root@vw-infotainment-gp:/tmp]# [m./vkms_import_mqb_dlc_v3.sh [J
+Importing VKMS MQB DLC
+Finished
+[root@vw-infotainment-gp:/tmp]# [msync
+[root@vw-infotainment-gp:/tmp]# [mexit

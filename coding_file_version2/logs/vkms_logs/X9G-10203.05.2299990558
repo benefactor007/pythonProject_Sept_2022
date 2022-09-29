@@ -1,0 +1,60 @@
+[root@vw-infotainment-gp:~]# [mcd /tm[root@vw-infotainment-gp:~]# [mcd /tmp/[J
+[root@vw-infotainment-gp:/tmp]# [mls
+[0;35mfifo_cmd[m                                                                [1;34msystemd-private-a89bd87df34347719348c50e68c8765a-MXNavi.service-iKNsvi[m
+[0;0mhmi.log[m                                                                 [0;0mtestmanager_12.sem[m
+[1;35mipc_socket[m                                                              [1;35mtsd.media.mib3.stream.api.socket[m
+[1;35mmdnsd[m                                                                   [0;35mtsd.networking.mib3.cmd.fifo[m
+[0;0mmdnsd.pid[m                                                               [0;35mtsd.networking.mib3.ret.fifo[m
+[1;34mnfs[m                                                                     [1;32mtsd.persistence.client.mib3.app.GetKey[m
+[1;34mpulse-PKdhtXMmr18n[m                                                      [1;32mtsd.persistence.client.mib3.app.SetKey[m
+[1;34mserviceip[m                                                               [1;32mvkms_import_mqb_dlc_v3.sh[m
+[0;0mswup-managerversion.txt[m                                                 [1;32mvkms_import_reset_dlc.sh[m
+[1;34msystemd-private-a89bd87df34347719348c50e68c8765a-ARNavi.service-aoACIi[m  [1;32mvkms_init_pss_gp.sh[m
+[root@vw-infotainment-gp:/tmp]# [m./vkm[root@vw-infotainment-gp:/tmp]# [m./vkms_i[Jn[root@vw-infotainment-gp:/tmp]# [m./vkms_init_pss_gp.sh [J[J[J[J[J[J[J[J[J[J[J[J[J[J[Jm[root@vw-infotainment-gp:/tmp]# [m./vkms_import_[Jre[root@vw-infotainment-gp:/tmp]# [m./vkms_import_reset_dlc.sh [J
+Importing VKMS [Reset DLC]
+TA error in VKMS_HandleDlc: 0x00000001
+[root@vw-infotainment-gp:/tmp]# [m./vkm[root@vw-infotainment-gp:/tmp]# [m./vkms_i[J[J[J[J[J[J[J[J[Jls
+[1;32mext.vkms.app.vkmstool[m                                                   [1;34msystemd-private-a89bd87df34347719348c50e68c8765a-ARNavi.service-aoACIi[m
+[0;35mfifo_cmd[m                                                                [1;34msystemd-private-a89bd87df34347719348c50e68c8765a-MXNavi.service-iKNsvi[m
+[0;0mhmi.log[m                                                                 [0;0mtestmanager_12.sem[m
+[1;35mipc_socket[m                                                              [1;35mtsd.media.mib3.stream.api.socket[m
+[1;35mmdnsd[m                                                                   [0;35mtsd.networking.mib3.cmd.fifo[m
+[0;0mmdnsd.pid[m                                                               [0;35mtsd.networking.mib3.ret.fifo[m
+[1;34mnfs[m                                                                     [1;32mtsd.persistence.client.mib3.app.GetKey[m
+[1;34mpulse-PKdhtXMmr18n[m                                                      [1;32mtsd.persistence.client.mib3.app.SetKey[m
+[0;0mreset.dlc[m                                                               [1;32mvkms_import_mqb_dlc_v3.sh[m
+[1;34mserviceip[m                                                               [1;32mvkms_import_reset_dlc.sh[m
+[0;0mswup-managerversion.txt[m                                                 [1;32mvkms_init_pss_gp.sh[m
+[root@vw-infotainment-gp:/tmp]# [m./vk[root@vw-infotainment-gp:/tmp]# [m./vkms_i[Jn[root@vw-infotainment-gp:/tmp]# [m./vkms_init_pss_gp.sh [J
+Importing VKMS MQB/GP [PSS KEY]
+Finished
+[root@vw-infotainment-gp:/tmp]# [m[root@vw-infotainment-gp:/tmp]# [m./vkms_init_pss_gp.sh [J[root@vw-infotainment-gp:/tmp]# [mls[J[root@vw-infotainment-gp:/tmp]# [m./vkms_import_reset_dlc.sh [J
+Importing VKMS [Reset DLC]
+Finished
+[root@vw-infotainment-gp:/tmp]# [m[root@vw-infotainment-gp:/tmp]# [m./vkms_import_reset_dlc.sh [J[root@vw-infotainment-gp:/tmp]# [m./vkms_init_pss_gp.sh [J[root@vw-infotainment-gp:/tmp]# [mls[J[J[J./vkm[root@vw-infotainment-gp:/tmp]# [m./vkms_i[Jmp[root@vw-infotainment-gp:/tmp]# [m./vkms_import_[J
+vkms_import_mqb_dlc_v3.sh  vkms_import_reset_dlc.sh
+[root@vw-infotainment-gp:/tmp]# [m./vkms_import_[Jm[root@vw-infotainment-gp:/tmp]# [m./vkms_import_mqb_dlc_v3.sh [J
+Importing VKMS MQB DLC
+Finished
+[root@vw-infotainment-gp:/tmp]# [msync
+[root@vw-infotainment-gp:/tmp]# [mexit
+[root@vw-infotainment-gp:~]# [mcd[J[Jcat |[J/m[J[Jup[J[J[root@vw-infotainment-gp:~]# [mcat .[J
+.ash_history  .cache/       .config/
+[root@vw-infotainment-gp:~]# [mcat .[J[J/h[root@vw-infotainment-gp:~]# [mcat /home/[J
+ARNavi/            core/              hmi/               log/               reboot-cookie      speech/            tmp/
+MXNavi/            crash/             iflytek/           lost+found/        root/              spool/             tsd.authentic.fs/
+cache/             db/                lib/               nfs/               run/               swup/              tzstorage/
+[root@vw-infotainment-gp:~]# [mcat /home/[Jsw[root@vw-infotainment-gp:~]# [mcat /home/swup/[J
+db/              history/         ip.txt           swupdata_v2.txt
+[root@vw-infotainment-gp:~]# [mcat /home/swup/[Jh[root@vw-infotainment-gp:~]# [mcat /home/swup/history/[J
+history-initial.txt    nominal-condition.txt
+[root@vw-infotainment-gp:~]# [mcat /home/swup/history/[J
+history-initial.txt    nominal-condition.txt
+[root@vw-infotainment-gp:~]# [mcat /home/swup/history/[Jh[root@vw-infotainment-gp:~]# [mcat /home/swup/history/history-initial.txt [J[root@vw-infotainment-gp:~]# [mcat /home/swup/history/history-initial.txt .[Jgre=[J[J[J[J[Jgrep [J[J[J[J[J|grep -i "rela[Jease"
+MEI3_CHN_VW37W_E0860J,RELEASE,1,86.0.9,C086,9
+RELEASE_UPDATE_STARTED,STRING,1,TRUE
+RELEASE_UPDATE,STRING,1,TRUE
+2,UNUSUAL,1,16,8,2022,22,49,31,IDLE,getCurrentInstalledRelease,installed release information not found in RO partition
+[root@vw-infotainment-gp:~]# [m^C
+[root@vw-infotainment-gp:~]# [m^C
+[root@vw-infotainment-gp:~]# [mexit

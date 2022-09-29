@@ -1,0 +1,25 @@
+[root@vw-infotainment-gp:~]# [mcd /me[root@vw-infotainment-gp:~]# [mcd /media/[J[J[J[J[J[J[Jtmp[root@vw-infotainment-gp:~]# [mcd /tmp/[J
+[root@vw-infotainment-gp:/tmp]# [mls
+[0;35mfifo_cmd[m                                                                [1;34msystemd-private-5b2aebba85924c9e8e7d273cee97da8a-MXNavi.service-Jkokvh[m
+[0;0mhmi.log[m                                                                 [1;35mtsd.media.mib3.stream.api.socket[m
+[1;35mipc_socket[m                                                              [0;35mtsd.networking.mib3.cmd.fifo[m
+[1;35mmdnsd[m                                                                   [0;35mtsd.networking.mib3.ret.fifo[m
+[0;0mmdnsd.pid[m                                                               [1;32mtsd.persistence.client.mib3.app.GetKey[m
+[1;34mnfs[m                                                                     [1;32mtsd.persistence.client.mib3.app.SetKey[m
+[1;34mpulse-PKdhtXMmr18n[m                                                      [1;32mvkms_import_mqb_dlc_v3.sh[m
+[1;34mserviceip[m                                                               [1;32mvkms_import_reset_dlc.sh[m
+[0;0mswup-managerversion.txt[m                                                 [1;32mvkms_init_pss_gp.sh[m
+[1;34msystemd-private-5b2aebba85924c9e8e7d273cee97da8a-ARNavi.service-VbXMEh[m
+[root@vw-infotainment-gp:/tmp]# [m./vkm[root@vw-infotainment-gp:/tmp]# [m./vkms_i[Jn[root@vw-infotainment-gp:/tmp]# [m./vkms_init_pss_gp.sh [J
+Importing VKMS MQB/GP [PSS KEY]
+Finished
+[root@vw-infotainment-gp:/tmp]# [m./vk[root@vw-infotainment-gp:/tmp]# [m./vkms_i[Jm[Jm[root@vw-infotainment-gp:/tmp]# [m./vkms_import_[Jr[root@vw-infotainment-gp:/tmp]# [m./vkms_import_reset_dlc.sh [J
+Importing VKMS [Reset DLC]
+Finished
+[root@vw-infotainment-gp:/tmp]# [m./vk[root@vw-infotainment-gp:/tmp]# [m./vkms_i[Jm[root@vw-infotainment-gp:/tmp]# [m./vkms_import_[Jo[J[root@vw-infotainment-gp:/tmp]# [m./vkms_import_[J
+vkms_import_mqb_dlc_v3.sh  vkms_import_reset_dlc.sh
+[root@vw-infotainment-gp:/tmp]# [m./vkms_import_[Jm[root@vw-infotainment-gp:/tmp]# [m./vkms_import_mqb_dlc_v3.sh [J
+Importing VKMS MQB DLC
+Finished
+[root@vw-infotainment-gp:/tmp]# [msync
+[root@vw-infotainment-gp:/tmp]# [mexit

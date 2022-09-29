@@ -1,12 +1,20 @@
 {
-    "body" : [
+    "tail" : [
         {
-            "sendline" : "sha1sum tsd.persistence.client.mib3.app.GetKey", 
-            "expect" : "880152e334d675794bea1f3616d1c94c147c1962  tsd.persistence.client.mib3.app.GetKey"
+            "sendline" : "sync"
         }, 
         {
-            "sendline" : "sha1sum tsd.persistence.client.mib3.app.SetKey", 
-            "expect" : "4e9d90211063684bf2ce56b3f9bf94cefc141fa4  tsd.persistence.client.mib3.app.SetKey"
+            "sendline" : "exit"
+        }
+    ], 
+    "body" : [
+        {
+            "expect" : "880152e334d675794bea1f3616d1c94c147c1962  tsd.persistence.client.mib3.app.GetKey", 
+            "sendline" : "sha1sum tsd.persistence.client.mib3.app.GetKey"
+        }, 
+        {
+            "expect" : "4e9d90211063684bf2ce56b3f9bf94cefc141fa4  tsd.persistence.client.mib3.app.SetKey", 
+            "sendline" : "sha1sum tsd.persistence.client.mib3.app.SetKey"
         }
     ], 
     "head" : [
@@ -15,20 +23,12 @@
             "spawn_command" : "ssh root@192.168.1.4"
         }, 
         {
-            "sendline" : "root", 
-            "expect" : "root@"
+            "expect" : "root@", 
+            "sendline" : "root"
         }, 
         {
-            "sendline" : "cd /tmp/", 
-            "expect" : "/tmp"
-        }
-    ], 
-    "tail" : [
-        {
-            "sendline" : "sync"
-        }, 
-        {
-            "sendline" : "exit"
+            "expect" : "/tmp", 
+            "sendline" : "cd /tmp/"
         }
     ]
 }

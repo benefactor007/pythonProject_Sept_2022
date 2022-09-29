@@ -256,7 +256,7 @@ class S1:
         return "\033[31m" + str + "\033[0m"
 
     def set_pexpect_command(self,json_path,json_file,log_path):
-        with open("{0}/{1}".format(json_path,json_file + ".json"), encoding="utf-8") as json_data,\
+        with open("{0}/{1}".format(json_path,json_file), encoding="utf-8") as json_data,\
                 open(log_path,'a')as logs:
         # with open("{0}/{1}".format(json_path, json_file + ".json"), encoding="utf-8") as json_data:
             data = json.load(json_data)
@@ -333,9 +333,7 @@ class JSON:
                 {'sendline': 'cd /tmp/','expect': '/tmp'}
             ]
         }
-        # tail_dict = {'{0}'.format("tail"): [{"sendline": "sync"}, {"sendline": "exit"}]}
-        tail_dict = {'{0}'.format("tail"): [{"sendline": "sync", "expect": "vw-infotainment"},
-                                            {"sendline": "exit", "expect": "Connection to 192.168.1.4 closed"}]}
+        tail_dict = {'{0}'.format("tail"): [{"sendline": "sync"}, {"sendline": "exit"}]}
         self.json_dict["body"] = self.json_list
         self.json_dict.update(haed_dict)
         self.json_dict.update(tail_dict)
@@ -370,7 +368,8 @@ if __name__ == '__main__':
     # print(os.path.basename(sys.argv[0]))
     # sys.exit()
     HU = S1()
-    HU.setProjectDir("/home/jpcc/PycharmProjects/pythonProject_Sept_2022/coding_file_version2")
+    # HU.setProjectDir("/home/jpcc/PycharmProjects/pythonProject_Sept_2022/coding_file_version2")
+    HU.setProjectDir(os.path.dirname(os.getcwd()))
     HU.setJsonDir("/json")
     HU.setToolsDir("/tools")
     HU.setLogDir("/logs")
@@ -392,13 +391,13 @@ if __name__ == '__main__':
         A.add_send_expect("sha1sum {0}".format(i), "{0}  {1}".format(HU.getFilesSha1sum()[i], i))
     # A.add_send_expect("root", "root")
     # A.add_send_expect("password", "password")
-    json_name = "checksum_files_v2"
+    json_name = "checksum_files_v2.json"
     # A.combineAsJson(json_name)
     A.combineAsJson_v2()
     print(A.json_dict)
     json_script1 = json.dumps(A.json_dict, indent=4, separators=(", ", " : "))
     print(json_script1)
-    A.saveAsFile(HU.json_dir, json_name + ".json")
+    A.saveAsFile(HU.json_dir, json_name)
     HU.set_pexpect_command(HU.json_dir, json_name, HU.log_name)
     # print(json.load(A.json_dict))
 

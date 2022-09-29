@@ -1,0 +1,44 @@
+[
+    {
+        "Data" : "e5", 
+        "Namespace_purpose" : "Open_read-write_access", 
+        "Key" : "0x00", 
+        "Namespace_hex" : "0x80000008"
+    }, 
+    {
+        "Data" : "56575839474138383838323033", 
+        "Namespace_purpose" : "Set_serial-num", 
+        "Key" : "0xF18C", 
+        "Namespace_hex" : "0x3000000"
+    }, 
+    {
+        "Data" : "5839472D31303230332E30352E32323939393930353536", 
+        "Namespace_purpose" : "Set_Fazit-id", 
+        "Key" : "0xF17C", 
+        "Namespace_hex" : "0x3000000"
+    }, 
+    {
+        "Data" : "583034", 
+        "Namespace_purpose" : "Set_HW-version", 
+        "Key" : "0xF1A3", 
+        "Namespace_hex" : "0x3000000"
+    }, 
+    {
+        "Data" : "43303836", 
+        "Namespace_purpose" : "Set_SW-version", 
+        "Key" : "0xF189", 
+        "Namespace_hex" : "0x3000000"
+    }, 
+    {
+        "Data" : "334A443033353836362020", 
+        "Namespace_purpose" : "Set_VW_Spare_Part_Number", 
+        "Key" : "0xF187", 
+        "Namespace_hex" : "0x3000000"
+    }, 
+    {
+        "Data" : "334A443033353836362020", 
+        "Namespace_purpose" : "Set_VW_ECU_Hardware_Number", 
+        "Key" : "0xF191", 
+        "Namespace_hex" : "0x3000000"
+    }
+]

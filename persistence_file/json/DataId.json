@@ -1,10 +1,12 @@
 {
     "tail" : [
         {
-            "sendline" : "sync"
+            "sendline" : "sync",
+            "expect" : "vw-infotainment"
         }, 
         {
-            "sendline" : "exit"
+            "sendline" : "exit",
+            "expect" : "Connection to 192.168.1.4 closed"
         }
     ], 
     "body" : [

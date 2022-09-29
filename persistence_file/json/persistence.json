@@ -1,0 +1,77 @@
+{
+    "body" : [
+        {
+            "sendline" : "./tsd.persistence.client.mib3.app.GetKey --ns 0x80000008 --key 0x00", 
+            "key" : "0x00", 
+            "ns" : "0x80000008", 
+            "expect" : "load: ns: 80000008 key: 0 slot: 0", 
+            "data" : ""
+        }, 
+        {
+            "sendline" : "./tsd.persistence.client.mib3.app.GetKey --ns 0x3000000 --key 0xF18C", 
+            "key" : "0xF18C", 
+            "ns" : "0x3000000", 
+            "expect" : "load: ns: 3000000 key: 61836 slot: 0", 
+            "data" : ""
+        }, 
+        {
+            "sendline" : "./tsd.persistence.client.mib3.app.GetKey --ns 0x3000000 --key 0xF17C", 
+            "key" : "0xF17C", 
+            "ns" : "0x3000000", 
+            "expect" : "load: ns: 3000000 key: 61820 slot: 0", 
+            "data" : ""
+        }, 
+        {
+            "sendline" : "./tsd.persistence.client.mib3.app.GetKey --ns 0x3000000 --key 0xF1A3", 
+            "key" : "0xF1A3", 
+            "ns" : "0x3000000", 
+            "expect" : "load: ns: 3000000 key: 61859 slot: 0", 
+            "data" : ""
+        }, 
+        {
+            "sendline" : "./tsd.persistence.client.mib3.app.GetKey --ns 0x3000000 --key 0xF189", 
+            "key" : "0xF189", 
+            "ns" : "0x3000000", 
+            "expect" : "load: ns: 3000000 key: 61833 slot: 0", 
+            "data" : ""
+        }, 
+        {
+            "sendline" : "./tsd.persistence.client.mib3.app.GetKey --ns 0x3000000 --key 0xF187", 
+            "key" : "0xF187", 
+            "ns" : "0x3000000", 
+            "expect" : "load: ns: 3000000 key: 61831 slot: 0", 
+            "data" : ""
+        }, 
+        {
+            "sendline" : "./tsd.persistence.client.mib3.app.GetKey --ns 0x3000000 --key 0xF191", 
+            "key" : "0xF191", 
+            "ns" : "0x3000000", 
+            "expect" : "load: ns: 3000000 key: 61841 slot: 0", 
+            "data" : ""
+        }
+    ], 
+    "head" : [
+        {
+            "spawn_command_expect" : "password", 
+            "spawn_command" : "ssh root@192.168.1.4"
+        }, 
+        {
+            "sendline" : "root", 
+            "expect" : "root@"
+        }, 
+        {
+            "sendline" : "cd /tmp/", 
+            "expect" : "/tmp"
+        }
+    ], 
+    "tail" : [
+        {
+            "sendline" : "sync", 
+            "expect" : "vw-infotainment"
+        }, 
+        {
+            "sendline" : "exit", 
+            "expect" : "Connection to 192.168.1.4 closed"
+        }
+    ]
+}

@@ -1,0 +1,75 @@
+{
+    "tail" : [
+        {
+            "sendline" : "sync"
+        }, 
+        {
+            "sendline" : "exit"
+        }
+    ], 
+    "head" : [
+        {
+            "spawn_command" : "ssh root@192.168.1.4", 
+            "spawn_command_expect" : "password"
+        }, 
+        {
+            "expect" : "root@", 
+            "sendline" : "root"
+        }, 
+        {
+            "expect" : "/tmp", 
+            "sendline" : "cd /tmp/"
+        }
+    ], 
+    "body" : [
+        {
+            "data" : "e5", 
+            "key" : "0x00", 
+            "expect" : "store: ns: 80000008 key: 0 slot: 0", 
+            "ns" : "0x80000008", 
+            "sendline" : "./tsd.persistence.client.mib3.app.SetKey --ns 0x80000008 --key 0x00 --val 0xe5"
+        }, 
+        {
+            "data" : "56575839474138383838323033", 
+            "key" : "0xF18C", 
+            "expect" : "store: ns: 3000000 key: 61836 slot: 0", 
+            "ns" : "0x3000000", 
+            "sendline" : "./tsd.persistence.client.mib3.app.SetKey --ns 0x3000000 --key 0xF18C --val 0x56575839474138383838323033"
+        }, 
+        {
+            "data" : "5839472D31303230332E30352E32323939393930353536", 
+            "key" : "0xF17C", 
+            "expect" : "store: ns: 3000000 key: 61820 slot: 0", 
+            "ns" : "0x3000000", 
+            "sendline" : "./tsd.persistence.client.mib3.app.SetKey --ns 0x3000000 --key 0xF17C --val 0x5839472D31303230332E30352E32323939393930353536"
+        }, 
+        {
+            "data" : "583034", 
+            "key" : "0xF1A3", 
+            "expect" : "store: ns: 3000000 key: 61859 slot: 0", 
+            "ns" : "0x3000000", 
+            "sendline" : "./tsd.persistence.client.mib3.app.SetKey --ns 0x3000000 --key 0xF1A3 --val 0x583034"
+        }, 
+        {
+            "data" : "43303836", 
+            "key" : "0xF189", 
+            "expect" : "store: ns: 3000000 key: 61833 slot: 0", 
+            "ns" : "0x3000000", 
+            "sendline" : "./tsd.persistence.client.mib3.app.SetKey --ns 0x3000000 --key 0xF189 --val 0x43303836"
+        }, 
+        {
+            "data" : "334A443033353836362020", 
+            "key" : "0xF187", 
+            "expect" : "store: ns: 3000000 key: 61831 slot: 0", 
+            "ns" : "0x3000000", 
+            "sendline" : "./tsd.persistence.client.mib3.app.SetKey --ns 0x3000000 --key 0xF187 --val 0x334A443033353836362020"
+        }, 
+        {
+            "data" : "334A443033353836362020", 
+            "key" : "0xF191", 
+            "expect" : "store: ns: 3000000 key: 61841 slot: 0", 
+            "ns" : "0x3000000", 
+            "sendline" : "./tsd.persistence.client.mib3.app.SetKey --ns 0x3000000 --key 0xF191 --val 0x334A443033353836362020"
+        }
+    ]
+}
