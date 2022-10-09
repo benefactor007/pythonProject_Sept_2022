@@ -3,6 +3,7 @@ Use Python3.5
 """
 import json
 import pprint
+import re
 import sys, os
 import time
 
@@ -105,6 +106,19 @@ class P_step1(JSON):
             data = json.load(json_file)
             res = jsonpath.jsonpath(data, jsonPathDesc)
         return res
+
+    # @staticmethod
+    def find_diff(self, target_json, record_json):
+        adaption_list = self.get_json_info(self.codingFiles_dir + "/" + target_json, "$.Adaptions..RDI",
+                                           codingFormat="utf-8 sig")
+        # print("{0} is {1}".format("len(adaption_list)",len(adaption_list)))
+        datasets_list = self.get_json_info(self.codingFiles_dir + "/" + target_json, "$.Datasets..RDI",
+                                           codingFormat="utf-8 sig")
+        # print("{0} is {1}".format("len(datasets_list)", len(datasets_list)))
+        ada_data_list = adaption_list + datasets_list
+        # print("{0} is {1}".format("len(ada_data_list)", len(ada_data_list)))
+        dataId_list = self.get_json_info(HU.json_dir + "/" + record_json, '$..[?(@.Key != "n/a")].Key')
+        return set(ada_data_list) - set(dataId_list)  # There're keys which cannot find in the recorde DataId overview
 
     @staticmethod
     def greenFont(str):
@@ -262,6 +276,80 @@ if __name__ == '__main__':
     HU.setErrorDir("/errors")
     HU.error_name += "/error_" + time.strftime("%Y%m%d_%H_%M_%S", time.localtime(time.time())) + ".txt"
     print(HU.codingFiles_dir)
+
+    print(list(HU.find_diff("VW_GP_CHN_v0.9.json", "rawData_DataId_0929.json")))
+
+
+    # adaption_list = HU.get_json_info(HU.codingFiles_dir + "/" + "VW_GP_CHN_v0.9.json", "$.Adaptions..RDI",
+    #                                codingFormat="utf-8 sig")
+    # datasets_list = HU.get_json_info(HU.codingFiles_dir + "/" + "VW_GP_CHN_v0.9.json", "$.Datasets..RDI",
+    #                                codingFormat="utf-8 sig")
+    # print("{0} is {1}".format("len(adaption_list)",len(adaption_list)))
+    # print("{0} is {1}".format("len(datasets_list)", len(datasets_list)))
+    # ada_data_list = adaption_list + datasets_list
+    # print("{0} is {1}".format("len(ada_data_list)", len(ada_data_list)))
+    # print("{0} is {1}".format("len(set(ada_data_list))", len(set(ada_data_list))))
+    # dataId_list = HU.get_json_info(HU.json_dir + "/" + "rawData_DataId_0929.json", '$..[?(@.Key != "n/a")].Key')
+    # print(dataId_list)
+    # import collections
+    # print([x for x, count in collections.Counter(dataId_list).items() if count > 1])
+    # print("{0} is {1}".format("len(dataId_list)",len(dataId_list)))
+    # print("{0} is {1}".format("len(set(dataId_list))", len(set(dataId_list))))
+    # print(set(ada_data_list)^set(dataId_list))
+    # print("{0} is {1}".format("len(set(ada_data_list)^set(dataId_list))", len(set(ada_data_list)^set(dataId_list))))
+    # print(set(ada_data_list)-set(dataId_list))
+    # print("{0} is {1}".format("len(set(ada_data_list)-set(dataId_list))", len(set(ada_data_list)-set(dataId_list))))
+    # print(set(ada_data_list) & set(dataId_list))
+    # print("{0} is {1}".format("len(set(ada_data_list)&set(dataId_list))", len(set(ada_data_list) & set(dataId_list))))
+
+    # {'0x0512', '0x056F', '0x0573', '0x0575', '0x0574', '0x0570', '0x0576'}
+
+    # with open(HU.codingFiles_dir + "/" + "rawData_DataId_0929.json", "a") as file:
+    #     file.write("0x1000000")
+    def File_Saveas(oldFile, newFile):
+        with open(oldFile, "r") as f1: oldFile_content = f1.read()
+        with open(newFile, "w") as f2: newFile_content = f2.write(oldFile_content)
+
+    def auto_save_file(path):
+      directory, file_name = os.path.split(path)
+      while os.path.isfile(path):
+        pattern = '(\d+)\)\.'
+        if re.search(pattern, file_name) is None:
+          file_name = file_name.replace('.', '(0).')
+        else:
+          current_number = int(re.findall(pattern, file_name)[-1])
+          new_number = current_number + 1
+          # file_name = file_name.replace(f'({current_number}).', f'({new_number}).')
+          file_name = file_name.replace('({0}).'.format(current_number),'({0}).'.format(new_number))
+        path = os.path.join(directory + os.sep + file_name)
+      return path
+
+    File_Saveas(HU.codingFiles_dir + "/" + "RecordDataIdOverview_0927.txt", auto_save_file(HU.codingFiles_dir + "/" + "RecordDataIdOverview_0927.txt"))
+
+    print(auto_save_file(HU.codingFiles_dir + "/" + "RecordDataIdOverview_0927.txt"))
+    # print("yes")
+    # print(os.path.isfile(HU.codingFiles_dir + "/" + "RecordDataIdOverview_0927.txt"))
+
+    # File_Saveas(HU.codingFiles_dir + "/" + "RecordDataIdOverview_0927.txt",
+    #             HU.codingFiles_dir + "/" + "RecordDataIdOverview_0927_plus.txt")
+    # with open(HU.codingFiles_dir + "/" + "RecordDataIdOverview_0927_plus.txt", "a") as file_editor:
+    #     file_editor.write("{0} {1} {2} {3} {4} {5}\n".format("0x1000000","0x0573","Adaptation","n/a","IPv6_address_of_Subnet_4_(L2TP_tunnel)_on_MIB","n/a"))
+    """
+    ns        key     
+    0x1000000 0x0574        ipv6_address_of_subnet_4_on_ccu
+    0x1000000 0x0576        ipv4_address_of_subnet_4_on_ccu
+    0x1000000 0x0575        ipv4_address_of_subnet_4_on_mib
+    0x1000000 0x0573        ipv6_address_of_subnet_4_on_mib
+    0x1000000 0x0512        android setting
+    0x1000000 0x0570        function configuration A2B
+    0x1000000 0x056F        mic OCU
+    """
+    #
+
+
+
+
+    sys.exit()
     ####################################################################
     HU.set_nsKey_dict("RecordDataIdOverview_0927.txt")
     HU.setJsonDir("/json")
@@ -285,6 +373,7 @@ if __name__ == '__main__':
     HU.json_dict = dict(zip(["key_data_list", "error_key_data_list"], [HU.key_data_list, HU.error_key_data_list]))
     # save a jsonFile which has error_key_data_list and key_data_list   <<<<< Step 3
     HU.saveAsFile(HU.json_dir, "rawData_GetKey_0929.json", HU.json_dict)
+
 
     #####################################################################################################
     # Get-key
@@ -361,6 +450,7 @@ if __name__ == '__main__':
         HU.json_dict = dict(zip(["key_data_list", "error_key_data_list"], [HU.key_data_list, HU.error_key_data_list]))
         HU.saveAsFile(HU.json_dir, "rawData_GetKey.json", HU.json_dict)
 
+
     # Get_all_key()
     def persistence_set_key():
         HU_set = P_step1()
@@ -381,12 +471,13 @@ if __name__ == '__main__':
         ns_list = HU_set.get_json_info(rawDataFile, "$..Namespace_hex", codingFormat="utf_8_sig")
         key_list = HU_set.get_json_info(rawDataFile, "$..Key", codingFormat="utf_8_sig")
         data_list = HU_set.get_json_info(rawDataFile, "$..Data", codingFormat="utf_8_sig")
-        for ns, key, data in zip(ns_list, key_list,data_list):
+        for ns, key, data in zip(ns_list, key_list, data_list):
             if ns.startswith("0x") and key.startswith("0x"):
-                HU_set.add_send_expect(strS="./tsd.persistence.client.mib3.app.SetKey --ns {0} --key {1} --val 0x{2}".format(ns, key,data) \
-                                   , strE="store: ns: {0} key: {1} slot: 0".format(ns[2:], int(key, 16)), \
-                                   str_ns=ns, str_key=key, str_data = data)
+                HU_set.add_send_expect(
+                    strS="./tsd.persistence.client.mib3.app.SetKey --ns {0} --key {1} --val 0x{2}".format(ns, key, data) \
+                    , strE="store: ns: {0} key: {1} slot: 0".format(ns[2:], int(key, 16)), \
+                    str_ns=ns, str_key=key, str_data=data)
         HU_set.combineAsJson_v2()  # In this func, it sets the self.json_dict
         HU_set.saveAsFile(HU_set.json_dir, "persistence_wDat.json", HU_set.json_dict)
-        HU_set.set_pexpect_command_v2(HU_set.json_dir, "persistence_wDat.json", HU_set.log_name,HU_set.error_name)
+        HU_set.set_pexpect_command_v2(HU_set.json_dir, "persistence_wDat.json", HU_set.log_name, HU_set.error_name)
         pprint.pprint(HU_set.key_data_list)
