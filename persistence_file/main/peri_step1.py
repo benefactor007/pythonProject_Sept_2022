@@ -45,9 +45,30 @@ class JSON:
         # self.json_dict[elementName].update(tail_dict)
 
     @staticmethod
+    def auto_save_file(path):
+        directory, file_name = os.path.split(path)
+        while os.path.isfile(path):
+            pattern = '(\d+)\)\.'
+            if re.search(pattern, file_name) is None:
+                file_name = file_name.replace('.', '(0).')
+            else:
+                current_number = int(re.findall(pattern, file_name)[-1])
+                new_number = current_number + 1
+                # file_name = file_name.replace(f'({current_number}).', f'({new_number}).')
+                file_name = file_name.replace('({0}).'.format(current_number), '({0}).'.format(new_number))
+                # print("{0} is {1}".format("directory",directory))
+                # print("{0} is {1}".format("file_name", file_name))
+            path = os.path.join(directory + os.sep + file_name)
+        return path
+
+
+    @staticmethod
     def saveAsFile(file_path, file_name, json_data):
-        json.dump(json_data, open(file_path + "/" + file_name, 'w'), ensure_ascii=False,
+        path = JSON.auto_save_file(file_path + "/" + file_name)
+        json.dump(json_data, open(path, 'w'), ensure_ascii=False,
                   indent=4, separators=(", ", " : "))
+        # print("{0} is {1}".format("path",path))
+        return path
 
     # @staticmethod
     # def save_like_a_json(jsonData, fileName='ns1000000.json', localPath=os.getcwd() + '/json_sets/'):
@@ -116,9 +137,17 @@ class P_step1(JSON):
                                            codingFormat="utf-8 sig")
         # print("{0} is {1}".format("len(datasets_list)", len(datasets_list)))
         ada_data_list = adaption_list + datasets_list
-        # print("{0} is {1}".format("len(ada_data_list)", len(ada_data_list)))
+        print("{0} is {1}".format("len(ada_data_list)", len(ada_data_list)))
+        ada_data_list.append("0x0600")
+        print("{0} is {1}".format("NOW len(ada_data_list)", len(ada_data_list)))
         dataId_list = self.get_json_info(HU.json_dir + "/" + record_json, '$..[?(@.Key != "n/a")].Key')
-        return set(ada_data_list) - set(dataId_list)  # There're keys which cannot find in the recorde DataId overview
+        # return set(ada_data_list) - set(dataId_list)  # There're keys which cannot find in the recorde DataId overview
+        if not set(ada_data_list) - set(dataId_list):
+            print("There is no difference")
+            return ada_data_list
+        else:
+            print("We got a difference, pls check it all!!!")
+            return set(ada_data_list) - set(dataId_list)
 
     @staticmethod
     def greenFont(str):
@@ -277,8 +306,9 @@ if __name__ == '__main__':
     HU.error_name += "/error_" + time.strftime("%Y%m%d_%H_%M_%S", time.localtime(time.time())) + ".txt"
     print(HU.codingFiles_dir)
 
-    print(list(HU.find_diff("VW_GP_CHN_v0.9.json", "rawData_DataId_0929.json")))
+    # print(list(HU.find_diff("VW_GP_CHN_v0.9.json", "rawData_DataId_0929.json")))
 
+    # sys.exit()
 
     # adaption_list = HU.get_json_info(HU.codingFiles_dir + "/" + "VW_GP_CHN_v0.9.json", "$.Adaptions..RDI",
     #                                codingFormat="utf-8 sig")
@@ -324,9 +354,11 @@ if __name__ == '__main__':
         path = os.path.join(directory + os.sep + file_name)
       return path
 
-    File_Saveas(HU.codingFiles_dir + "/" + "RecordDataIdOverview_0927.txt", auto_save_file(HU.codingFiles_dir + "/" + "RecordDataIdOverview_0927.txt"))
 
-    print(auto_save_file(HU.codingFiles_dir + "/" + "RecordDataIdOverview_0927.txt"))
+    # File_Saveas(HU.codingFiles_dir + os.sep + "RecordDataIdOverview_0927.txt", HU.codingFiles_dir + os.sep + "RecordDataIdOverview_1010.txt")
+
+    # sys.exit()
+    # print(auto_save_file(HU.codingFiles_dir + "/" + "RecordDataIdOverview_0927.txt"))
     # print("yes")
     # print(os.path.isfile(HU.codingFiles_dir + "/" + "RecordDataIdOverview_0927.txt"))
 
@@ -336,19 +368,54 @@ if __name__ == '__main__':
     #     file_editor.write("{0} {1} {2} {3} {4} {5}\n".format("0x1000000","0x0573","Adaptation","n/a","IPv6_address_of_Subnet_4_(L2TP_tunnel)_on_MIB","n/a"))
     """
     ns        key     
-    0x1000000 0x0574        ipv6_address_of_subnet_4_on_ccu
-    0x1000000 0x0576        ipv4_address_of_subnet_4_on_ccu
-    0x1000000 0x0575        ipv4_address_of_subnet_4_on_mib
-    0x1000000 0x0573        ipv6_address_of_subnet_4_on_mib
-    0x1000000 0x0512        android setting
-    0x1000000 0x0570        function configuration A2B
-    0x1000000 0x056F        mic OCU
+0x1000000   0x0574  Adaptation  n/a     ipv6_address_of_subnet_4_on_ccu     n/a
+0x1000000   0x0576  Adaptation  n/a     ipv4_address_of_subnet_4_on_ccu     n/a
+0x1000000   0x0575  Adaptation  n/a     ipv4_address_of_subnet_4_on_mib     n/a
+0x1000000   0x0573  Adaptation  n/a     ipv6_address_of_subnet_4_on_mib     n/a
+0x1000000   0x0512  Adaptation  n/a     android setting     n/a
+0x1000000   0x0570  Adaptation  n/a     function configuration A2B      n/a
+0x1000000   0x056F  Adaptation  n/a     mic OCU     n/a
     """
     #
+    def first_step1(instance,file_name,new_json_name): #
+        """
+
+        :param instance: As instance
+        :param file_name:  input file like "RecordDataIdOverview_0927.txt" which includes ns key longname
+        :param new_json_name: create a new json file like rawData_DataId_0929.json
+        :return:
+        """
+        instance.set_nsKey_dict(file_name)
+        return instance.saveAsFile(instance.json_dir, new_json_name, instance.nsKey_dict_list)
 
 
-
-
+    raw_data_json_path = first_step1(HU,"RecordDataIdOverview_1010.txt","rawData_DataId_1010.json")
+    print("new json file is {0}".format(raw_data_json_path))
+    # diff_res = list(HU.find_diff("VW_GP_CHN_v0.9.json", os.path.split(raw_data_json_path)[-1]))
+    # if not diff_res:
+    #     print("There is no difference")
+    # else:
+    #     print("There is a difference, pls check it!!!")
+    #     print(diff_res)
+    diff_res = list(HU.find_diff("VW_GP_CHN_v0.9.json", os.path.split(raw_data_json_path)[-1]))
+    print(diff_res)
+    # we got coding file key
+    key_ns_dict = {}
+    for i in diff_res:
+        # print("{0} is {1}".format("i", i))
+        key_ns_dict[i] = HU.get_json_info(raw_data_json_path, '$..[?(@.Key == "{0}")].Namespace_hex'.format(i))[-1]
+        # print(HU.get_json_info(raw_data_json_path, '$..[?(@.Key == "{0}")].Namespace_hex'.format(i)))
+    pprint.pprint(key_ns_dict)
+    # print(dataId_list)
+    for i, j in key_ns_dict.items():
+        print(i,j)
+    # for key, ns in key_ns_dict:
+    #     if ns.startswith("0x") and key.startswith("0x"):
+    #         HU.add_send_expect(strS="./tsd.persistence.client.mib3.app.GetKey --ns {0} --key {1}".format(ns, key),
+    #                            strE="load: ns: {0} key: {1} slot: 0".format(ns[2:], int(key, 16)), str_ns=ns,
+    #                            str_key=key)
+    # HU.combineAsJson_v2()
+    # HU.saveAsFile(HU.json_dir, "coding_nsKey_1010.json", HU.json_dict)
     sys.exit()
     ####################################################################
     HU.set_nsKey_dict("RecordDataIdOverview_0927.txt")
