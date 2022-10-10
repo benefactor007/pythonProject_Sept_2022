@@ -407,15 +407,15 @@ if __name__ == '__main__':
         # print(HU.get_json_info(raw_data_json_path, '$..[?(@.Key == "{0}")].Namespace_hex'.format(i)))
     pprint.pprint(key_ns_dict)
     # print(dataId_list)
-    for i, j in key_ns_dict.items():
-        print(i,j)
+    for key, ns in key_ns_dict.items():
+        # print(i,j)
     # for key, ns in key_ns_dict:
-    #     if ns.startswith("0x") and key.startswith("0x"):
-    #         HU.add_send_expect(strS="./tsd.persistence.client.mib3.app.GetKey --ns {0} --key {1}".format(ns, key),
-    #                            strE="load: ns: {0} key: {1} slot: 0".format(ns[2:], int(key, 16)), str_ns=ns,
-    #                            str_key=key)
-    # HU.combineAsJson_v2()
-    # HU.saveAsFile(HU.json_dir, "coding_nsKey_1010.json", HU.json_dict)
+        if ns.startswith("0x") and key.startswith("0x"):
+            HU.add_send_expect(strS="./tsd.persistence.client.mib3.app.GetKey --ns {0} --key {1}".format(ns, key),
+                               strE="load: ns: {0} key: {1} slot: 0".format(ns[2:], int(key, 16)), str_ns=ns,
+                               str_key=key)
+    HU.combineAsJson_v2()
+    HU.saveAsFile(HU.json_dir, "coding_nsKey_1010.json", HU.json_dict)
     sys.exit()
     ####################################################################
     HU.set_nsKey_dict("RecordDataIdOverview_0927.txt")
