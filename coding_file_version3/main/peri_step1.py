@@ -359,11 +359,15 @@ if __name__ == '__main__':
     ####HERE: pls assign value here####
     ref_ns_key_data =  "RecordDataIdOverview_1010.txt"
     rawData_ref_ns_key_data = "rawData_DataId_1010.json"
+    # coding_json_file = "VW_GP_CHN_v0.9.json"
+    coding_json_file = "VW_B_Sample_CHN_JV_v3.7_base_v0.1.json"
+    # coding_json_file = "coding_nsKey_1010.json"
+    toGetKey_file = "toGet_nsKey_1011.json"
+    ####
 
-
-    raw_data_json_path = first_step1(HU,ref_ns_key_data,"rawData_DataId_1010.json")
+    raw_data_json_path = first_step1(HU,ref_ns_key_data,rawData_ref_ns_key_data)
     print("new json file is {0}".format(raw_data_json_path))
-    diff_res = list(HU.find_diff("VW_GP_CHN_v0.9.json", os.path.split(raw_data_json_path)[-1]))
+    diff_res = list(HU.find_diff(coding_json_file, os.path.split(raw_data_json_path)[-1]))
     print(diff_res)
     # we got coding file key
     key_ns_dict = {}
@@ -381,7 +385,7 @@ if __name__ == '__main__':
                                strE="load: ns: {0} key: {1} slot: 0".format(ns[2:], int(key, 16)), str_ns=ns,
                                str_key=key)
     HU.combineAsJson_v2()
-    HU.saveAsFile(HU.json_dir, "coding_nsKey_1010.json", HU.json_dict)
+    HU.saveAsFile(HU.json_dir, toGetKey_file, HU.json_dict)
     sys.exit()
 
 

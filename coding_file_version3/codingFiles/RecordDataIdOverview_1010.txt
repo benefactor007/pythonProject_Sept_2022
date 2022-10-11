@@ -168,3 +168,10 @@ Namespace_hex	Key	Namespace_purpose	SpecID	Longname	Length
 0x4000000	0x7217	Records	Dia_Ds_309	Speech Signal Enhancement 8 (SpeechSE---8)	4095
 0x4000000	0x720D	Records	Dia_Ds_181	Geschwindigkeitsabschaltschwellen (GeschwAbSchw)	34
 0x5000000	n/a	Information	n/a	n/a	0
+0x1000000   0x0574  Adaptation  n/a     ipv6_address_of_subnet_4_on_ccu     n/a
+0x1000000   0x0576  Adaptation  n/a     ipv4_address_of_subnet_4_on_ccu     n/a
+0x1000000   0x0575  Adaptation  n/a     ipv4_address_of_subnet_4_on_mib     n/a
+0x1000000   0x0573  Adaptation  n/a     ipv6_address_of_subnet_4_on_mib     n/a
+0x1000000   0x0512  Adaptation  n/a     android setting     n/a
+0x1000000   0x0570  Adaptation  n/a     function configuration A2B      n/a
+0x1000000   0x056F  Adaptation  n/a     mic OCU     n/a
