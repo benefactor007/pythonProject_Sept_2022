@@ -1,3 +1,0 @@
-ssh root@192.168.1.4
-pexpect.spawn(command=ssh root@192.168.1.4, , logfile=<_io.TextIOWrapper name='/home/jpcc/PycharmProjects/pythonProject_Sept_2022/coding_file_version3/logs/step2_20221011_17_31_09.txt' mode='a' encoding='UTF-8'>, encoding=utf-8, timeout=20)
-p.expect(password)

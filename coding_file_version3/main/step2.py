@@ -128,9 +128,10 @@ if __name__ == '__main__':
     print(f"step2.log_path is {step2.log_path}\n"
           f"step2.error_path is  {step2.error_path}")
     #### Here: pls assign the value here ####
-    pexpect_exec_json = "toGet_nsKey_1011.json"
-    pexpect_output_json = "rawData_toGet_nsKey_1011.json"
-
+    # pexpect_exec_json = "toGet_nsKey_1011.json"
+    pexpect_exec_json = "toGet_nsKey_VW_GP_v09_1013.json"
+    # pexpect_output_json = "rawData_toGet_nsKey_1011.json"
+    pexpect_output_json = "rawData_toGet_nsKey_VW_GP_v09_1013.json"
     ##########################################
 
     step2.set_pexpect_command_v2(step2.json_folder, pexpect_exec_json, step2.log_path, step2.error_path)

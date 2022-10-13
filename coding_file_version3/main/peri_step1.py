@@ -249,7 +249,7 @@ class P_step1(JSON):
                                     print("{0}:\t{1}".format("pre_state", pre_status))
                                     pre_data = a[a.index("data:") + 5:a.index("\r")]
                                     print("{0}:\t{1}".format("pre_data", pre_data))
-                                    self.error_key_data_list.append(dict(zip(["ns", "key", "data", "status"],
+                                    self.key_data_list.append(dict(zip(["ns", "key", "data", "status"],
                                                                              [pre_ns, pre_key, pre_data,
                                                                               pre_status])))
                                 else:
@@ -359,10 +359,10 @@ if __name__ == '__main__':
     ####HERE: pls assign value here####
     ref_ns_key_data =  "RecordDataIdOverview_1010.txt"
     rawData_ref_ns_key_data = "rawData_DataId_1010.json"
-    # coding_json_file = "VW_GP_CHN_v0.9.json"
-    coding_json_file = "VW_B_Sample_CHN_JV_v3.7_base_v0.1.json"
+    coding_json_file = "VW_GP_CHN_v0.9.json"
+    # coding_json_file = "VW_B_Sample_CHN_JV_v3.7_base_v0.1.json"
     # coding_json_file = "coding_nsKey_1010.json"
-    toGetKey_file = "toGet_nsKey_1011.json"
+    toGetKey_file = "toGet_nsKey_VW_GP_v09_1013.json"
     ####
 
     raw_data_json_path = first_step1(HU,ref_ns_key_data,rawData_ref_ns_key_data)
