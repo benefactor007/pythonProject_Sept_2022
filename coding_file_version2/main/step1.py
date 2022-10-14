@@ -149,7 +149,7 @@ class S1:
             # print(S1.scp(i,S1.user,S1.ip,S1.dest_dir))
             print("Start to transfer {0} to HU".format(i))
             a = S1.scp(i, S1.user, S1.ip, S1.dest_dir)
-            print(cls.adv_doPexpect(p_command=a, json_name="transferFiles.json", jsonpath_command="$.transfer.*"))
+            print(cls.adv_doPexpect(p_command=a, json_name="[default]transferFiles.json", jsonpath_command="$.transfer.*"))
             time.sleep(1)
         return True
 

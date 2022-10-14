@@ -70,10 +70,13 @@ class JSON:
         # print("{0} is {1}".format("path",path))
         return path
 
-    # @staticmethod
-    # def save_like_a_json(jsonData, fileName='ns1000000.json', localPath=os.getcwd() + '/json_sets/'):
-    #     return json.dump(jsonData, open(localPath + fileName, 'w'), ensure_ascii=False,
-    #                      indent=4, separators=(", ", " : "))
+    @staticmethod
+    def saveFile(file_path, file_name, json_data):
+        path = file_path + os.sep + file_name
+        json.dump(json_data, open(path, 'w'), ensure_ascii=False,
+                  indent=4, separators=(", ", " : "))
+        # print("{0} is {1}".format("path",path))
+        return path
 
     def __str__(self):
         return "{0}\n{1}".format(self.json_list, self.json_dict)
@@ -198,7 +201,7 @@ class P_step1(JSON):
                     p.expect(spawn_command_expect)
                     for ele_dict in (
                             jsonpath.jsonpath(data, "$.head[?(@.sendline)]"),
-                            jsonpath.jsonpath(data, "$.body[?(@.sendline)]"), \
+                            jsonpath.jsonpath(data, "$.body[?(@.sendline)]"),
                             jsonpath.jsonpath(data, "$.tail[?(@.sendline)]")):
                         # pprint.pprint(ele_dict)
                         for i in ele_dict:
@@ -357,11 +360,11 @@ if __name__ == '__main__':
 
 
     ####HERE: pls assign value here####
+    #in codingFIles folder
     ref_ns_key_data =  "RecordDataIdOverview_1010.txt"
-    rawData_ref_ns_key_data = "rawData_DataId_1010.json"
     coding_json_file = "VW_GP_CHN_v0.9.json"
-    # coding_json_file = "VW_B_Sample_CHN_JV_v3.7_base_v0.1.json"
-    # coding_json_file = "coding_nsKey_1010.json"
+    # in json folder
+    rawData_ref_ns_key_data = "rawData_DataId_1010.json"
     toGetKey_file = "toGet_nsKey_VW_GP_v09_1013.json"
     ####
 
