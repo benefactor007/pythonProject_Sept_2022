@@ -1,10 +1,53 @@
 {
-    "tail" : [
+    "body" : [
         {
-            "sendline" : "sync"
+            "ns" : "0x80000008", 
+            "key" : "0x00", 
+            "sendline" : "./tsd.persistence.client.mib3.app.SetKey --ns 0x80000008 --key 0x00 --val 0xe5", 
+            "expect" : "store: ns: 80000008 key: 0 slot: 0", 
+            "data" : "e5"
         }, 
         {
-            "sendline" : "exit"
+            "ns" : "0x3000000", 
+            "key" : "0xF18C", 
+            "sendline" : "./tsd.persistence.client.mib3.app.SetKey --ns 0x3000000 --key 0xF18C --val 0x56575839474138383838333036", 
+            "expect" : "store: ns: 3000000 key: 61836 slot: 0", 
+            "data" : "56575839474138383838333036"
+        }, 
+        {
+            "ns" : "0x3000000", 
+            "key" : "0xF17C", 
+            "sendline" : "./tsd.persistence.client.mib3.app.SetKey --ns 0x3000000 --key 0xF17C --val 0x5839472D31303230332E30352E32323939393930363339", 
+            "expect" : "store: ns: 3000000 key: 61820 slot: 0", 
+            "data" : "5839472D31303230332E30352E32323939393930363339"
+        }, 
+        {
+            "ns" : "0x3000000", 
+            "key" : "0xF1A3", 
+            "sendline" : "./tsd.persistence.client.mib3.app.SetKey --ns 0x3000000 --key 0xF1A3 --val 0x583231", 
+            "expect" : "store: ns: 3000000 key: 61859 slot: 0", 
+            "data" : "583231"
+        }, 
+        {
+            "ns" : "0x3000000", 
+            "key" : "0xF189", 
+            "sendline" : "./tsd.persistence.client.mib3.app.SetKey --ns 0x3000000 --key 0xF189 --val 0x43363930", 
+            "expect" : "store: ns: 3000000 key: 61833 slot: 0", 
+            "data" : "43363930"
+        }, 
+        {
+            "ns" : "0x3000000", 
+            "key" : "0xF187", 
+            "sendline" : "./tsd.persistence.client.mib3.app.SetKey --ns 0x3000000 --key 0xF187 --val 0x3347423033353836364220", 
+            "expect" : "store: ns: 3000000 key: 61831 slot: 0", 
+            "data" : "3347423033353836364220"
+        }, 
+        {
+            "ns" : "0x3000000", 
+            "key" : "0xF191", 
+            "sendline" : "./tsd.persistence.client.mib3.app.SetKey --ns 0x3000000 --key 0xF191 --val 0x3347423033353836364220", 
+            "expect" : "store: ns: 3000000 key: 61841 slot: 0", 
+            "data" : "3347423033353836364220"
         }
     ], 
     "head" : [
@@ -13,63 +56,22 @@
             "spawn_command_expect" : "password"
         }, 
         {
-            "expect" : "root@", 
-            "sendline" : "root"
+            "sendline" : "root", 
+            "expect" : "root@"
         }, 
         {
-            "expect" : "/tmp", 
-            "sendline" : "cd /tmp/"
+            "sendline" : "cd /tmp/", 
+            "expect" : "/tmp"
         }
     ], 
-    "body" : [
+    "tail" : [
         {
-            "data" : "e5", 
-            "key" : "0x00", 
-            "expect" : "store: ns: 80000008 key: 0 slot: 0", 
-            "ns" : "0x80000008", 
-            "sendline" : "./tsd.persistence.client.mib3.app.SetKey --ns 0x80000008 --key 0x00 --val 0xe5"
+            "sendline" : "sync", 
+            "expect" : "vw-infotainment"
         }, 
         {
-            "data" : "56575839474138383838323033", 
-            "key" : "0xF18C", 
-            "expect" : "store: ns: 3000000 key: 61836 slot: 0", 
-            "ns" : "0x3000000", 
-            "sendline" : "./tsd.persistence.client.mib3.app.SetKey --ns 0x3000000 --key 0xF18C --val 0x56575839474138383838323033"
-        }, 
-        {
-            "data" : "5839472D31303230332E30352E32323939393930353536", 
-            "key" : "0xF17C", 
-            "expect" : "store: ns: 3000000 key: 61820 slot: 0", 
-            "ns" : "0x3000000", 
-            "sendline" : "./tsd.persistence.client.mib3.app.SetKey --ns 0x3000000 --key 0xF17C --val 0x5839472D31303230332E30352E32323939393930353536"
-        }, 
-        {
-            "data" : "583034", 
-            "key" : "0xF1A3", 
-            "expect" : "store: ns: 3000000 key: 61859 slot: 0", 
-            "ns" : "0x3000000", 
-            "sendline" : "./tsd.persistence.client.mib3.app.SetKey --ns 0x3000000 --key 0xF1A3 --val 0x583034"
-        }, 
-        {
-            "data" : "43303836", 
-            "key" : "0xF189", 
-            "expect" : "store: ns: 3000000 key: 61833 slot: 0", 
-            "ns" : "0x3000000", 
-            "sendline" : "./tsd.persistence.client.mib3.app.SetKey --ns 0x3000000 --key 0xF189 --val 0x43303836"
-        }, 
-        {
-            "data" : "334A443033353836362020", 
-            "key" : "0xF187", 
-            "expect" : "store: ns: 3000000 key: 61831 slot: 0", 
-            "ns" : "0x3000000", 
-            "sendline" : "./tsd.persistence.client.mib3.app.SetKey --ns 0x3000000 --key 0xF187 --val 0x334A443033353836362020"
-        }, 
-        {
-            "data" : "334A443033353836362020", 
-            "key" : "0xF191", 
-            "expect" : "store: ns: 3000000 key: 61841 slot: 0", 
-            "ns" : "0x3000000", 
-            "sendline" : "./tsd.persistence.client.mib3.app.SetKey --ns 0x3000000 --key 0xF191 --val 0x334A443033353836362020"
+            "sendline" : "exit", 
+            "expect" : "Connection to 192.168.1.4 closed"
         }
     ]
 }

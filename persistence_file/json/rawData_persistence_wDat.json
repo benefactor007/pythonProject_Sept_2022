@@ -1,44 +1,51 @@
 [
     {
-        "Data" : "e5", 
-        "Namespace_purpose" : "Open_read-write_access", 
+        "Namespace_hex" : "0x80000008", 
         "Key" : "0x00", 
-        "Namespace_hex" : "0x80000008"
+        "Namespace_purpose" : "Open_read-write_access", 
+        "Data" : "e5", 
+        "Comment" : "#open_write"
     }, 
     {
-        "Data" : "56575839474138383838323033", 
-        "Namespace_purpose" : "Set_serial-num", 
+        "Namespace_hex" : "0x3000000", 
         "Key" : "0xF18C", 
-        "Namespace_hex" : "0x3000000"
+        "Namespace_purpose" : "Set_serial-num", 
+        "Data" : "56575839474138383838333036", 
+        "Comment" : "#VWVWX9GA8888301"
     }, 
     {
-        "Data" : "5839472D31303230332E30352E32323939393930353536", 
-        "Namespace_purpose" : "Set_Fazit-id", 
+        "Namespace_hex" : "0x3000000", 
         "Key" : "0xF17C", 
-        "Namespace_hex" : "0x3000000"
+        "Namespace_purpose" : "Set_Fazit-id", 
+        "Data" : "5839472D31303230332E30352E32323939393930363339", 
+        "Comment" : "#X9G-10203.05.2299990634"
     }, 
     {
-        "Data" : "583034", 
-        "Namespace_purpose" : "Set_HW-version", 
+        "Namespace_hex" : "0x3000000", 
         "Key" : "0xF1A3", 
-        "Namespace_hex" : "0x3000000"
+        "Namespace_purpose" : "Set_HW-version", 
+        "Data" : "583231", 
+        "Comment" : "#X21"
     }, 
     {
-        "Data" : "43303836", 
-        "Namespace_purpose" : "Set_SW-version", 
+        "Namespace_hex" : "0x3000000", 
         "Key" : "0xF189", 
-        "Namespace_hex" : "0x3000000"
+        "Namespace_purpose" : "Set_SW-version", 
+        "Data" : "43363930", 
+        "Comment" : "#C690"
     }, 
     {
-        "Data" : "334A443033353836362020", 
-        "Namespace_purpose" : "Set_VW_Spare_Part_Number", 
+        "Namespace_hex" : "0x3000000", 
         "Key" : "0xF187", 
-        "Namespace_hex" : "0x3000000"
+        "Namespace_purpose" : "Set_VW_Spare_Part_Number", 
+        "Data" : "3347423033353836364220", 
+        "Comment" : "#3GB035866B"
     }, 
     {
-        "Data" : "334A443033353836362020", 
-        "Namespace_purpose" : "Set_VW_ECU_Hardware_Number", 
+        "Namespace_hex" : "0x3000000", 
         "Key" : "0xF191", 
-        "Namespace_hex" : "0x3000000"
+        "Namespace_purpose" : "Set_VW_ECU_Hardware_Number", 
+        "Data" : "3347423033353836364220", 
+        "Comment" : "#3GB035866B"
     }
 ]

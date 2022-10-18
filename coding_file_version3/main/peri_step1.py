@@ -362,10 +362,12 @@ if __name__ == '__main__':
     ####HERE: pls assign value here####
     #in codingFIles folder
     ref_ns_key_data =  "RecordDataIdOverview_1010.txt"
-    coding_json_file = "VW_GP_CHN_v0.9.json"
+    # coding_json_file = "VW_GP_CHN_v0.9.json"
+    coding_json_file = "VW_BM_CHN_v0.9.json"
     # in json folder
     rawData_ref_ns_key_data = "rawData_DataId_1010.json"
-    toGetKey_file = "toGet_nsKey_VW_GP_v09_1013.json"
+    # toGetKey_file = "toGet_nsKey_VW_GP_v09_1013.json"
+    toGetKey_file = "toGet_nsKey_VW_BM_CHN_v09_1018.json"
     ####
 
     raw_data_json_path = first_step1(HU,ref_ns_key_data,rawData_ref_ns_key_data)

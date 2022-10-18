@@ -250,7 +250,7 @@ if __name__ == '__main__':
                                                                             time.localtime(
                                                                                               time.time())) + ".txt"
     tt1.transfer_files(tt1.getFileList(tt1.tools_folder))             # important, copy files to HU
-
+    print(tt1.greenFont("Transfer was successfully finished"))
     for i in tt1.fileList:
         # print(f"os.path.split(i)[-1] : {os.path.split(i)[-1]}")
         # print(f"tt1.getSha1sum(i).split()[0] : {tt1.getSha1sum(i).split()[0]}")
@@ -259,6 +259,7 @@ if __name__ == '__main__':
     pexpect_output_json = "file_checksum_expect.json"
     tt1.saveFile(tt1.json_folder, pexpect_output_json, tt1.json_dict)
     tt1.set_pexpect_command(tt1.json_folder, pexpect_output_json, tt1.log_path)
+    print(tt1.greenFont("files checksum was successfully double checked"))
     # sys.exit()
 
 
@@ -294,9 +295,11 @@ if __name__ == '__main__':
     print(f"step2.log_path is {step2.log_path}\n"
           f"step2.error_path is  {step2.error_path}")
     #### Here: pls assign the value here ####
-    pexpect_exec_json = "toGet_nsKey_VW_GP_v09_1013.json"
+    # pexpect_exec_json = "toGet_nsKey_VW_GP_v09_1013.json"
+    pexpect_exec_json = "toGet_nsKey_VW_BM_CHN_v09_1018.json"
     # pexpect_output_json = "rawData_toGet_nsKey_1011.json"
-    pexpect_output_json = "codingFile_GetKey_checklist.json"
+    # pexpect_output_json = "codingFile_GetKey_checklist.json"
+    pexpect_output_json = "codingFile_GetKey_checklist_VW_BM_CHN_v09_1018.json"
     ##########################################
 
     step2.set_pexpect_command_v2(step2.json_folder, pexpect_exec_json, step2.log_path, step2.error_path)

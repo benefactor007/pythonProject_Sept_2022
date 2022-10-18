@@ -70,6 +70,14 @@ class JSON:
         # print("{0} is {1}".format("path",path))
         return path
 
+    @staticmethod
+    def saveFile(file_path, file_name, json_data):
+        path = file_path + "/" + file_name
+        json.dump(json_data, open(path, 'w'), ensure_ascii=False,
+                  indent=4, separators=(", ", " : "))
+        # print("{0} is {1}".format("path",path))
+        return path
+
     # @staticmethod
     # def save_like_a_json(jsonData, fileName='ns1000000.json', localPath=os.getcwd() + '/json_sets/'):
     #     return json.dump(jsonData, open(localPath + fileName, 'w'), ensure_ascii=False,
@@ -300,6 +308,41 @@ class P_step1(JSON):
 
 
 if __name__ == '__main__':
+    # Get_all_key()
+    def persistence_set_key():
+        HU_set = P_step1()
+        HU_set.setProjectDir(os.path.dirname(os.getcwd()))
+        HU_set.setJsonDir("/json")
+        HU_set.set_codingFiles("/codingFiles")
+        HU_set.setLogDir("/logs")
+        HU_set.log_name += "/step2_" + time.strftime("%Y%m%d_%H_%M_%S", time.localtime(time.time())) + ".txt"
+        HU_set.setErrorDir("/errors")
+        HU_set.error_name += "/error_" + time.strftime("%Y%m%d_%H_%M_%S", time.localtime(time.time())) + ".txt"
+        print("{0}:\t{1}".format("HU_set.codingFiles_dir", HU_set.codingFiles_dir))
+        # json_name = "persistence.json"
+        HU_set.set_nsKey_dict("persistenceOverview_wData_1018.txt")
+        HU_set.setJsonDir("/json")
+        print("{0}:\t{1}".format("HU.json_dir", HU_set.json_dir))
+        HU_set.saveFile(HU_set.json_dir, "rawData_persistence_wDat.json", HU_set.nsKey_dict_list)
+        rawDataFile = HU_set.json_dir + "/" + "rawData_persistence_wDat.json"
+        ns_list = HU_set.get_json_info(rawDataFile, "$..Namespace_hex", codingFormat="utf_8_sig")
+        key_list = HU_set.get_json_info(rawDataFile, "$..Key", codingFormat="utf_8_sig")
+        data_list = HU_set.get_json_info(rawDataFile, "$..Data", codingFormat="utf_8_sig")
+        for ns, key, data in zip(ns_list, key_list, data_list):
+            if ns.startswith("0x") and key.startswith("0x"):
+                HU_set.add_send_expect(
+                    strS="./tsd.persistence.client.mib3.app.SetKey --ns {0} --key {1} --val 0x{2}".format(ns, key,
+                                                                                                          data),
+                    strE="store: ns: {0} key: {1} slot: 0".format(ns[2:], int(key, 16)), str_ns=ns, str_key=key,
+                    str_data=data)
+        HU_set.combineAsJson_v2()  # In this func, it sets the self.json_dict
+        HU_set.saveFile(HU_set.json_dir, "persistence_wDat.json", HU_set.json_dict)
+        HU_set.set_pexpect_command_v2(HU_set.json_dir, "persistence_wDat.json", HU_set.log_name, HU_set.error_name)
+        pprint.pprint(HU_set.key_data_list)
+
+
+    persistence_set_key()
+    sys.exit()
     HU = P_step1()
     HU.setProjectDir(os.path.dirname(os.getcwd()))
     HU.setJsonDir("/json")
@@ -493,33 +536,4 @@ if __name__ == '__main__':
         HU.saveAsFile(HU.json_dir, "rawData_GetKey.json", HU.json_dict)
 
 
-    # Get_all_key()
-    def persistence_set_key():
-        HU_set = P_step1()
-        HU_set.setProjectDir(os.path.dirname(os.getcwd()))
-        HU_set.setJsonDir("/json")
-        HU_set.set_codingFiles("/codingFiles")
-        HU_set.setLogDir("/logs")
-        HU_set.log_name += "/step2_" + time.strftime("%Y%m%d_%H_%M_%S", time.localtime(time.time())) + ".txt"
-        HU_set.setErrorDir("/errors")
-        HU_set.error_name += "/error_" + time.strftime("%Y%m%d_%H_%M_%S", time.localtime(time.time())) + ".txt"
-        print("{0}:\t{1}".format("HU_set.codingFiles_dir", HU_set.codingFiles_dir))
-        # json_name = "persistence.json"
-        HU_set.set_nsKey_dict("persistenceOverview_wData_0929.txt")
-        HU_set.setJsonDir("/json")
-        print("{0}:\t{1}".format("HU.json_dir", HU_set.json_dir))
-        HU_set.saveAsFile(HU_set.json_dir, "rawData_persistence_wDat.json", HU_set.nsKey_dict_list)
-        rawDataFile = HU_set.json_dir + "/" + "rawData_persistence_wDat.json"
-        ns_list = HU_set.get_json_info(rawDataFile, "$..Namespace_hex", codingFormat="utf_8_sig")
-        key_list = HU_set.get_json_info(rawDataFile, "$..Key", codingFormat="utf_8_sig")
-        data_list = HU_set.get_json_info(rawDataFile, "$..Data", codingFormat="utf_8_sig")
-        for ns, key, data in zip(ns_list, key_list, data_list):
-            if ns.startswith("0x") and key.startswith("0x"):
-                HU_set.add_send_expect(
-                    strS="./tsd.persistence.client.mib3.app.SetKey --ns {0} --key {1} --val 0x{2}".format(ns, key, data) \
-                    , strE="store: ns: {0} key: {1} slot: 0".format(ns[2:], int(key, 16)), \
-                    str_ns=ns, str_key=key, str_data=data)
-        HU_set.combineAsJson_v2()  # In this func, it sets the self.json_dict
-        HU_set.saveAsFile(HU_set.json_dir, "persistence_wDat.json", HU_set.json_dict)
-        HU_set.set_pexpect_command_v2(HU_set.json_dir, "persistence_wDat.json", HU_set.log_name, HU_set.error_name)
-        pprint.pprint(HU_set.key_data_list)
+

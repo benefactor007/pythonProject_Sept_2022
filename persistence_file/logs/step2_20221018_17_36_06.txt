@@ -1,0 +1,54 @@
+{'Namespace_hex': '0x80000008', 'Key': '0x00', 'Namespace_purpose': 'Open_read-write_access', 'Data': 'e5', 'Comment': '#open_write'}
+{'Namespace_hex': '0x3000000', 'Key': '0xF18C', 'Namespace_purpose': 'Set_serial-num', 'Data': '56575839474138383838333035', 'Comment': '#VWVWX9GA8888301'}
+{'Namespace_hex': '0x3000000', 'Key': '0xF17C', 'Namespace_purpose': 'Set_Fazit-id', 'Data': '5839472D31303230332E30352E32323939393930363338', 'Comment': '#X9G-10203.05.2299990634'}
+{'Namespace_hex': '0x3000000', 'Key': '0xF1A3', 'Namespace_purpose': 'Set_HW-version', 'Data': '583231', 'Comment': '#X21'}
+{'Namespace_hex': '0x3000000', 'Key': '0xF189', 'Namespace_purpose': 'Set_SW-version', 'Data': '43363930', 'Comment': '#C690'}
+{'Namespace_hex': '0x3000000', 'Key': '0xF187', 'Namespace_purpose': 'Set_VW_Spare_Part_Number', 'Data': '3347423033353836364220', 'Comment': '#3GB035866B'}
+{'Namespace_hex': '0x3000000', 'Key': '0xF191', 'Namespace_purpose': 'Set_VW_ECU_Hardware_Number', 'Data': '3347423033353836364220', 'Comment': '#3GB035866B'}
+ssh root@192.168.1.4
+pexpect.spawn(command=ssh root@192.168.1.4, , logfile=<_io.TextIOWrapper name='/home/jpcc/PycharmProjects/pythonProject_Sept_2022/persistence_file/logs/step2_20221018_17_36_06.txt' mode='a' encoding='UTF-8'>, encoding=utf-8, timeout=20)
+p.expect(password)
+root@192.168.1.4's password: root
+
+[root@vw-infotainment-867871:~]# [mcd /tmp/
+cd /tmp/
+[root@vw-infotainment-867871:/tmp]# [m./tsd.persistence.client.mib3.app.SetKey --ns 0x80000008 --key 0x00 --val 0xe5
+./tsd.persistence.client.mib3.app.SetKey --n
+s 0x80000008 --key 0x00 --val 0xe5
+e5,
+store: ns: 80000008 key: 0 slot: 0 status: 0 data: e5 
+[root@vw-infotainment-867871:/tmp]# [m./tsd.persistence.client.mib3.app.SetKey --ns 0x3000000 --key 0xF18C --val 0x56575839474138383838333035
+./tsd.persistence.client.mib3.app.SetKey --n
+s 0x3000000 --key 0xF18C --val 0x56575839474138383838333035
+56,57,58,39,47,41,38,38,38,38,33,30,35,
+store: ns: 3000000 key: 61836 slot: 0 status: 0 data: 56 57 58 39 47 41 38 38 38 38 33 30 35 
+[root@vw-infotainment-867871:/tmp]# [m./tsd.persistence.client.mib3.app.SetKey --ns 0x3000000 --key 0xF17C --val 0x5839472D31303230332E30352E32323939393930363338
+./tsd.persistence.client.mib3.app.SetKey --n
+s 0x3000000 --key 0xF17C --val 0x5839472D31303230332E30352E32323939393930363338
+58,39,47,2d,31,30,32,30,33,2e,30,35,2e,32,32,39,39,39,39,30,36,33,38,
+store: ns: 3000000 key: 61820 slot: 0 status: 0 data: 58 39 47 2d 31 30 32 30 33 2e 30 35 2e 32 32 39 39 39 39 30 36 33 38 
+[root@vw-infotainment-867871:/tmp]# [m./tsd.persistence.client.mib3.app.SetKey --ns 0x3000000 --key 0xF1A3 --val 0x583231
+./tsd.persistence.client.mib3.app.SetKey --n
+s 0x3000000 --key 0xF1A3 --val 0x583231
+58,32,31,
+store: ns: 3000000 key: 61859 slot: 0 status: 0 data: 58 32 31 
+[root@vw-infotainment-867871:/tmp]# [m./tsd.persistence.client.mib3.app.SetKey --ns 0x3000000 --key 0xF189 --val 0x43363930
+./tsd.persistence.client.mib3.app.SetKey --n
+s 0x3000000 --key 0xF189 --val 0x43363930
+43,36,39,30,
+store: ns: 3000000 key: 61833 slot: 0 status: 0 data: 43 36 39 30 
+[root@vw-infotainment-867871:/tmp]# [m./tsd.persistence.client.mib3.app.SetKey --ns 0x3000000 --key 0xF187 --val 0x3347423033353836364220
+./tsd.persistence.client.mib3.app.SetKey --n
+s 0x3000000 --key 0xF187 --val 0x3347423033353836364220
+33,47,42,30,33,35,38,36,36,42,20,
+store: ns: 3000000 key: 61831 slot: 0 status: 0 data: 33 47 42 30 33 35 38 36 36 42 20 
+./tsd.persistence.client.mib3.app.SetKey --ns 0x3000000 --key 0xF191 --val 0x3347423033353836364220
+[root@vw-infotainment-867871:/tmp]# [m./tsd.persistence.client.mib3.app.SetKey --n
+s 0x3000000 --key 0xF191 --val 0x3347423033353836364220
+33,47,42,30,33,35,38,36,36,42,20,
+store: ns: 3000000 key: 61841 slot: 0 status: 0 data: 33 47 42 30 33 35 38 36 36 42 20 
+[root@vw-infotainment-867871:/tmp]# [msync
+exit
+sync
+[root@vw-infotainment-867871:/tmp]# [mexit
+Connection to 192.168.1.4 closed.

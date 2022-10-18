@@ -1,0 +1,8 @@
+Namespace_hex   Key         Namespace_purpose                   Data                                                    Comment
+0x80000008      0x00        Open_read-write_access              e5                                                      #open_write
+0x3000000       0xF18C      Set_serial-num                      56575839474138383838333036                              #VWVWX9GA8888301
+0x3000000       0xF17C      Set_Fazit-id                        5839472D31303230332E30352E32323939393930363339          #X9G-10203.05.2299990634
+0x3000000       0xF1A3      Set_HW-version                      583231                                                  #X21
+0x3000000       0xF189      Set_SW-version                      43363930                                                #C690
+0x3000000       0xF187      Set_VW_Spare_Part_Number            3347423033353836364220                                  #3GB035866B
+0x3000000       0xF191      Set_VW_ECU_Hardware_Number          3347423033353836364220                                  #3GB035866B

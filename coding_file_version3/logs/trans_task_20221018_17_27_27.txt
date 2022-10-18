@@ -1,0 +1,12 @@
+root@192.168.1.4's password: root
+
+vkms_import_reset_dlc.sh                        0%    0     0.0KB/s   --:-- ETAvkms_import_reset_dlc.sh                      100%  117KB 117.0KB/s   00:00    
+root@192.168.1.4's password: root
+
+tsd.persistence.client.mib3.app.SetKey          0%    0     0.0KB/s   --:-- ETAtsd.persistence.client.mib3.app.SetKey        100%   16KB  16.4KB/s   00:00    
+root@192.168.1.4's password: root
+
+vkms_init_pss.sh                                0%    0     0.0KB/s   --:-- ETAvkms_init_pss.sh                              100%  117KB 116.9KB/s   00:00    
+root@192.168.1.4's password: root
+
+tsd.persistence.client.mib3.app.GetKey          0%    0     0.0KB/s   --:-- ETAtsd.persistence.client.mib3.app.GetKey        100%   15KB  14.5KB/s   00:00    
